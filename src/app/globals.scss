@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-rgb: 238, 241, 249;
+  --text-color-rgb: 21, 23, 42;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+  }
+}
+
+body {
+  @apply text-base overflow-hidden;
+  font-family: var(--font-inter), sans-serif;
+  color: rgb(var(--text-color-rgb));
+  background-color: rgb(var(--background-rgb));
+}
