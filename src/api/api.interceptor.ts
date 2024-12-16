@@ -1,6 +1,7 @@
 import axios, { CreateAxiosDefaults } from 'axios';
 import { authTokenService } from '../services/auth/auth-token.service';
 import { errorCatch, getContentType } from './api.helper';
+import { authService } from '../services/auth/auth.service'
 
 const options: CreateAxiosDefaults = {
   baseURL: process.env.API_url,
@@ -12,10 +13,10 @@ const axiosClassic: axios.AxiosInstance = axios.create(options);
 const axiosWithAuth: axios.AxiosInstance = axios.create(options);
 
 axiosWithAuth.interceptors.request.use((config: axios.InternalAxiosRequestConfig) => {
-  const accesToken: string | null = authTokenService.getAccessToken();
+  const accessToken: string | null = authTokenService.getAccessToken();
 
-  if (config?.headers && accesToken) {
-    config.headers.Authorization = `Bearer ${accesToken}`;
+  if (config?.headers && accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
 
   return config;
@@ -37,7 +38,7 @@ axiosWithAuth.interceptors.request.use(
         return axiosWithAuth(originalRequest);
       } catch (error) {
         if (errorCatch(error) === 'Acces neautorizat') {
-          authTokenService.removeFromStorage();
+          authTokenService.removeTokenFromStorage();
         }
       }
     }

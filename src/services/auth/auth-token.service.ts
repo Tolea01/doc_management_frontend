@@ -12,11 +12,11 @@ class AuthTokenService {
     return Cookies.get(EnumTokens.ACCESS_TOKEN) || null;
   }
 
-  saveTokenStorage(accessToken: string): void {
+  saveTokenToStorage(accessToken: string): void {
     Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, this.tokenOptions);
   }
 
-  removeFromStorage(): void {
+  removeTokenFromStorage(): void {
     Cookies.remove(EnumTokens.ACCESS_TOKEN);
   }
 }
