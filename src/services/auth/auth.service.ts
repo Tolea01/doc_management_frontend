@@ -10,22 +10,29 @@ import {
 import { authTokenService } from './auth-token.service';
 
 class AuthService {
+  private BASE_URL = '/api/auth';
+
   async login(data: IAuthLoginForm): Promise<void> {
     const response: axios.AxiosResponse<IAuthLoginResponse, any> =
-      await axiosClassic.post<IAuthLoginResponse>('auth/login', data);
+      await axiosClassic.post<IAuthLoginResponse>(`${this.BASE_URL}/login`, data);
 
     if (response.data.accessToken) {
       authTokenService.saveTokenToStorage(response.data.accessToken);
     }
   }
 
-  async register(data: IAuthRegisterForm): Promise<void> {
-    const response: axios.AxiosResponse<IAuthRegisterResponse> =
-      await axiosClassic.post<IAuthRegisterResponse>('auth/register', data);
+  async register(
+    data: IAuthRegisterForm,
+  ): Promise<axios.AxiosResponse<IAuthRegisterResponse, any>> {
+    const response: axios.AxiosResponse<IAuthRegisterResponse, any> =
+      await axiosClassic.post<IAuthRegisterResponse>(`${this.BASE_URL}/register`, data);
+
+    return response;
   }
 
   async getNewTokens(): Promise<void> {
-    const response = await axiosClassic.post<IAuthRefreshTokens>('/auth/refresh-tokens');
+    const response: axios.AxiosResponse<IAuthRefreshTokens, any> =
+      await axiosClassic.post<IAuthRefreshTokens>(`${this.BASE_URL}/refresh-tokens`);
 
     if (response.data.accessToken) {
       authTokenService.saveTokenToStorage(response.data.accessToken);
@@ -33,7 +40,9 @@ class AuthService {
   }
 
   async logout(): Promise<axios.AxiosResponse<boolean, any>> {
-    const response = await axiosClassic.post<boolean>('auth/logout');
+    const response: axios.AxiosResponse<boolean, any> = await axiosClassic.post<boolean>(
+      `${this.BASE_URL}/logout`,
+    );
 
     if (response.data) {
       authTokenService.removeTokenFromStorage();

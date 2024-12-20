@@ -1,16 +1,4 @@
-export interface IUser {
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  role: string;
-  photo: string;
-  phone_number: string;
-  created_by: number;
-  updated_by: number;
-  created_at: Date;
-  updated_at: Date;
-}
+import { IUser } from './user.type'
 
 export interface IAuthLoginForm {
   email: string;
