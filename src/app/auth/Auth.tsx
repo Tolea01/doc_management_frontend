@@ -38,15 +38,8 @@ export default function Auth() {
           placeholder="Introduceți email-ul..."
           className="auth-input"
         />
-        <InputField
-          type="password"
-          label="Parola"
-          placeholder="Introduceți parola..."
-          // className="auth-input"
-        />
-        <div className="auth-checkbox-container">
-          <Checkbox label="Memorează parola" />
-        </div>
+        <InputField type="password" label="Parola" placeholder="Introduceți parola..." />
+        <Checkbox label="Memorează parola" />
       </form>
     </section>
   );
