@@ -1,0 +1,15 @@
+.checkbox-label {
+  @apply flex cursor-pointer items-start gap-2;
+}
+
+.checkbox-input {
+  @apply size-4 rounded border-gray-300;
+}
+
+.checkbox-container {
+  @apply flex items-center;
+}
+
+.checkbox-label-text {
+  @apply font-medium text-slate-700;
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import Checkbox from '../../components/ui/checkbox/Checkbox';
 import InputField from '../../components/ui/fields/InputField';
 import { IAuthLoginForm } from '../../types/auth.types';
 import './styles.css';
@@ -43,7 +44,7 @@ export default function Auth() {
           placeholder="Introduceți parola..."
           className="auth-input"
         />
-        {/* <button className='border-2'>dsadadsadsada</button> */}
+        <Checkbox label="Memorează parola" />
       </form>
     </section>
   );

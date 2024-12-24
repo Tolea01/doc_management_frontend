@@ -7,7 +7,7 @@
 }
 
 .auth-title {
-  @apply text-center text-xl text-primary font-semibold;
+  @apply text-center text-xl text-primary font-semibold uppercase;
 }
 
 .auth-subtitle {
