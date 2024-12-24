@@ -8,6 +8,9 @@ interface FieldsProps {
   id?: string;
   placeholder?: string;
   className?: string;
+  onChange?: (event: React.ChangeEvent<HTMLElement>) => void;
+  inputProps?: React.InputHTMLAttributes<HTMLElement>;
+  disabled?: boolean;
 }
 
 export default function InputField({
@@ -16,6 +19,9 @@ export default function InputField({
   id,
   placeholder,
   className,
+  onChange,
+  inputProps,
+  disabled,
 }: FieldsProps): JSX.Element {
   const generatedId = id || `checkbox-${Math.random().toString(36).slice(2, 11)}`;
 
@@ -33,6 +39,8 @@ export default function InputField({
         className="input-field"
         type={inputType}
         placeholder={placeholder}
+        disabled={disabled}
+        {...inputProps}
       />
       {type === 'password' && (
         <button
