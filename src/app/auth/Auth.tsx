@@ -39,7 +39,7 @@ export default function Auth() {
           className="auth-input"
         />
         <InputField
-          type="text"
+          type="password"
           label="Parola"
           placeholder="Introduceți parola..."
           className="auth-input"
