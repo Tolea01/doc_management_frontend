@@ -1,4 +1,4 @@
-.auth-wrapper {
+/* .auth-wrapper {
   @apply h-screen flex mt-44 justify-center;
 }
 
@@ -15,5 +15,29 @@
 }
 
 .auth-input {
-  @apply mb-5
+  @apply mb-5;
+}
+
+.auth-checkbox-container {
+  @apply flex items-end
+} */
+
+.auth-wrapper {
+  @apply h-screen flex mt-44 justify-center;
+}
+
+.auth-form {
+  @apply flex gap-3 flex-col items-baseline bg-white pt-14 p-4 rounded-lg h-2/4 w-1/4 border-2 shadow-lg;
+}
+
+.auth-title {
+  @apply w-full text-center text-xl text-primary font-semibold uppercase;
+}
+
+.auth-subtitle {
+  @apply w-full text-center text-2xl font-semibold mb-2;
+}
+
+.auth-input {
+  @apply mb-4;
 }

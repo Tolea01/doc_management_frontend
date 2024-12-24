@@ -1,5 +1,5 @@
 .input-fieldset {
-  @apply w-full max-w-sm min-w-[200px] relative;
+  @apply w-full min-w-[200px] relative;
 }
 
 .input-field {
