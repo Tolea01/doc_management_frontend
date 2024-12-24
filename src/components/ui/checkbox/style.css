@@ -11,5 +11,5 @@
 }
 
 .checkbox-label-text {
-  @apply font-medium text-slate-700;
+  @apply font-medium text-sm text-slate-500;
 }

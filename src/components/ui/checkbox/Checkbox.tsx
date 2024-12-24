@@ -36,9 +36,7 @@ export default function Checkbox({
         />
       </div>
       <div className="checkbox-label-container">
-        <strong className="checkbox-label-text">
-          {label}
-        </strong>
+        <span className="checkbox-label-text">{label}</span>
       </div>
     </label>
   );
