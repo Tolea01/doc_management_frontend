@@ -1,10 +1,11 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import Checkbox from '../../components/ui/checkbox/Checkbox';
-import InputField from '../../components/ui/fields/InputField';
-import { IAuthLoginForm } from '../../types/auth.types';
-import './styles.css';
+import { useForm } from 'react-hook-form'
+import Button from '../../components/ui/buttons/Button'
+import Checkbox from '../../components/ui/checkbox/Checkbox'
+import InputField from '../../components/ui/fields/InputField'
+import { IAuthLoginForm } from '../../types/auth.types'
+import './styles.css'
 
 export default function Auth() {
   const { register, handleSubmit, reset } = useForm<IAuthLoginForm>({ mode: 'onChange' });
@@ -38,8 +39,15 @@ export default function Auth() {
           placeholder="Introduceți email-ul..."
           className="auth-input"
         />
-        <InputField type="password" label="Parola" placeholder="Introduceți parola..." />
-        <Checkbox label="Memorează parola" />
+        <InputField
+          type="password"
+          label="Parola"
+          placeholder="Introduceți parola..."
+        />
+        <Checkbox label="Memorează parola" className='mb-3' />
+        <div className="auth-button">
+          <Button value="Intră" variant="primary" size="medium" />
+        </div>
       </form>
     </section>
   );

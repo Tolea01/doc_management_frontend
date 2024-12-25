@@ -1,0 +1,31 @@
+.button {
+  @apply inline-block rounded border xs:w-full md:w-auto;
+}
+
+.button.primary {
+  @apply bg-primary text-white hover:bg-transparent hover:text-primary hover:border-primary;
+}
+
+.button.secondary {
+  @apply bg-gray-600 text-white hover:bg-transparent hover:text-gray-600 hover:border-gray-600;
+}
+
+.button.danger {
+  @apply bg-red-600 text-white hover:bg-transparent hover:text-red-600 hover:border-red-600;
+}
+
+.button.small {
+  @apply px-6 py-2 text-xs;
+}
+
+.button.medium {
+  @apply px-10 py-3 text-sm;
+}
+
+.button.large {
+  @apply px-12 py-4 text-lg;
+}
+
+.button.disabled {
+  @apply cursor-not-allowed opacity-50;
+}
