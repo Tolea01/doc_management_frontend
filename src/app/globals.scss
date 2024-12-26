@@ -17,3 +17,23 @@ body {
   color: $text-color-rgb;
   background-color: $background-rgb;
 }
+
+.toast {
+  @apply border shadow-lg;
+}
+
+.toast.success {
+  @apply border-success text-success;
+}
+
+.toast.danger {
+  @apply border-danger text-danger;
+}
+
+.toast.warning {
+  @apply border-warning text-warning;
+}
+
+.toast.info {
+  @apply border-info text-info;
+}

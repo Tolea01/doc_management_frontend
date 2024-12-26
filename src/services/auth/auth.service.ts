@@ -10,7 +10,7 @@ import {
 import { authTokenService } from './auth-token.service';
 
 class AuthService {
-  private BASE_URL = '/api/auth';
+  private BASE_URL = '/auth';
 
   async login(data: IAuthLoginForm): Promise<void> {
     const response: axios.AxiosResponse<IAuthLoginResponse, any> =

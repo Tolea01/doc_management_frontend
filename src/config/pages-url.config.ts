@@ -1,5 +1,5 @@
 class DASHBOARD {
-  private root = 'app';
+  private root = 'dashboard';
 
   HOME = this.root;
 }
