@@ -1,56 +1,70 @@
 import { useState } from 'react';
+import { Control, Controller, FieldValues } from 'react-hook-form';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
 import './styles.css';
 
-interface FieldsProps {
+interface FieldsProps<T extends FieldValues> {
+  name: keyof T;
+  control: Control<T>;
+  defaultValue?: string;
   label: string;
   type: string;
-  id?: string;
+  id: string;
   placeholder?: string;
   className?: string;
-  onChange?: (event: React.ChangeEvent<HTMLElement>) => void;
   inputProps?: React.InputHTMLAttributes<HTMLElement>;
   disabled?: boolean;
 }
 
-export default function InputField({
+export default function InputField<T extends FieldValues>({
+  name,
+  defaultValue,
+  control,
   label,
   type,
   id,
   placeholder,
   className,
-  onChange,
   inputProps,
   disabled,
-}: FieldsProps): JSX.Element {
-  const generatedId = id || `checkbox-${Math.random().toString(36).slice(2, 11)}`;
-
+}: FieldsProps<T>): JSX.Element {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const inputType = type === 'password' && isPasswordVisible ? 'text' : type;
 
   return (
-    <fieldset className={`input-fieldset ${className}`}>
-      <label className="input-label" htmlFor={generatedId}>
-        {label}
-      </label>
-      <input
-        id={generatedId}
-        className="input-field"
-        type={inputType}
-        placeholder={placeholder}
-        disabled={disabled}
-        {...inputProps}
-      />
-      {type === 'password' && (
-        <button
-          type="button"
-          className="password-toogle"
-          onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-        >
-          {isPasswordVisible ? <GoEyeClosed /> : <GoEye />}
-        </button>
+    <Controller
+      control={control as Control}
+      name={name as string}
+      defaultValue={defaultValue}
+      render={({ field: { onChange, onBlur, value, ref } }) => (
+        <fieldset className={`input-fieldset ${className}`}>
+          <label className="input-label" htmlFor={id}>
+            {label}
+          </label>
+          <input
+            id={id}
+            className="input-field"
+            type={inputType}
+            placeholder={placeholder}
+            disabled={disabled}
+            onChange={onChange}
+            onBlur={onBlur}
+            value={value}
+            ref={ref}
+            {...inputProps}
+          />
+          {type === 'password' && (
+            <button
+              type="button"
+              className="password-toogle"
+              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+            >
+              {isPasswordVisible ? <GoEyeClosed /> : <GoEye />}
+            </button>
+          )}
+        </fieldset>
       )}
-    </fieldset>
+    />
   );
 }

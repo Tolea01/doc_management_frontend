@@ -1,7 +1,7 @@
 import './style.css';
 
 interface CheckboxProps {
-  id?: string;
+  id: string;
   label: string;
   checked?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,15 +19,13 @@ export default function Checkbox({
   className,
   inputProps,
 }: CheckboxProps) {
-  const generatedId = id || `checkbox-${Math.random().toString(36).slice(2, 11)}`;
-
   return (
-    <label htmlFor={generatedId} className={`${className} checkbox-label`}>
+    <label htmlFor={id} className={`${className} checkbox-label`}>
       <div className="checkbox-container">
         &#8203;
         <input
           type="checkbox"
-          id={generatedId}
+          id={id}
           checked={checked}
           onChange={onChange}
           disabled={disabled}

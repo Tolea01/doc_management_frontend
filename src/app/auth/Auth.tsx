@@ -14,7 +14,9 @@ import { IAuthLoginForm } from '../../types/auth.types';
 import './style.css';
 
 export default function Auth() {
-  const { register, handleSubmit, reset } = useForm<IAuthLoginForm>({ mode: 'onChange' });
+  const { handleSubmit, reset, control } = useForm<IAuthLoginForm>({
+    mode: 'onChange',
+  });
 
   const router = useRouter();
 
@@ -42,20 +44,24 @@ export default function Auth() {
           AGENȚIA TERITORIALĂ DE ASISTENȚĂ SOCIALĂ NORD-NORD-VEST
         </h2>
         <h3 className="auth-subtitle">Loghează-te</h3>
-        <InputField
+        <InputField<IAuthLoginForm>
           type="email"
           label="Email"
           placeholder="Introduceți email-ul..."
           className="auth-input"
-          {...register('email')}
+          control={control}
+          name="email"
+          id="input-auth-email"
         />
         <InputField
           type="password"
           label="Parola"
           placeholder="Introduceți parola..."
-          {...register('password')}
+          control={control}
+          name="password"
+          id="input-auth-password"
         />
-        <Checkbox label="Memorează parola" className="mb-3" />
+        <Checkbox label="Memorează parola" className="mb-3" id="auth-checkbox" />
         <div className="auth-button">
           <Button value="Intră" variant="primary" size="medium" type="submit" />
         </div>
