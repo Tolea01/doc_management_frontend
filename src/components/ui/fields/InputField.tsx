@@ -18,7 +18,7 @@ interface FieldsProps<T extends FieldValues> {
 
 export default function InputField<T extends FieldValues>({
   name,
-  defaultValue,
+  defaultValue = '',
   control,
   label,
   type,
@@ -37,6 +37,7 @@ export default function InputField<T extends FieldValues>({
       control={control as Control}
       name={name as string}
       defaultValue={defaultValue}
+      rules={{ required: true }}
       render={({ field: { onChange, onBlur, value, ref } }) => (
         <fieldset className={`input-fieldset ${className}`}>
           <label className="input-label" htmlFor={id}>

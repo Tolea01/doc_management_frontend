@@ -50,7 +50,7 @@ export default function Auth() {
           placeholder="Introduceți email-ul..."
           className="auth-input"
           control={control}
-          name="email"
+          name="email_address"
           id="input-auth-email"
         />
         <InputField

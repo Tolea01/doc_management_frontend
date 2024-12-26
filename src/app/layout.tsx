@@ -38,7 +38,7 @@ export default function RootLayout({
             }}
             theme="light"
             position="top-center"
-            duration={1500}
+            duration={2000}
           />
         </Providers>
       </body>

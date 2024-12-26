@@ -1,11 +1,13 @@
-export const getContentType = () => ({ 'Content-Type': 'aplication/json' });
+export const getContentType = () => ({ 'Content-Type': 'application/json' });
 
-export const errorCatch = (error: any): string => {
+export const errorCatch = (error: any): string | string[] => {
   const message = error?.response?.data?.message;
+  const serverErrors = error?.response?.data?.errors;
 
-  return message
-    ? typeof error.response.data.message === 'object'
-      ? message[0]
-      : message
-    : error.message;
+  return (
+    serverErrors
+      ?.flatMap((err: any) => Object.values(err.constraints).map(String))
+      .join('\n') ||
+    (message ? (typeof message === 'object' ? message : message) : error.message)
+  );
 };
