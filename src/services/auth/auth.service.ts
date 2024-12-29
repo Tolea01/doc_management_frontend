@@ -12,13 +12,17 @@ import { authTokenService } from './auth-token.service';
 class AuthService {
   private BASE_URL = '/auth';
 
-  async login(data: IAuthLoginForm): Promise<void> {
+  async login(
+    data: IAuthLoginForm,
+  ): Promise<axios.AxiosResponse<IAuthLoginResponse, any>> {
     const response: axios.AxiosResponse<IAuthLoginResponse, any> =
       await axiosClassic.post<IAuthLoginResponse>(`${this.BASE_URL}/login`, data);
 
     if (response.data.accessToken) {
       authTokenService.saveTokenToStorage(response.data.accessToken);
     }
+
+    return response;
   }
 
   async register(
