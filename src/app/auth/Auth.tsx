@@ -23,8 +23,8 @@ export default function Auth() {
   const { mutate } = useMutation({
     mutationKey: ['auth'],
     mutationFn: (data: IAuthLoginForm) => authService.login(data),
-    onSuccess() {
-      toast.success('Bine ai venit!');
+    onSuccess(data) {
+      toast.success(`Bine ai venit ${data.data.user.name}!`);
       reset();
       router.push(DASHBOARD_PAGES.HOME);
     },
