@@ -26,3 +26,11 @@ export interface IUserListResponse extends IUser {
 export type IUserUpdate = Partial<
   Omit<IUser, 'id' | 'created_at' | 'updated_at' | 'updated_by' | 'created_by_'>
 >;
+
+export interface ICurrentUser {
+  userId: number;
+  userName: string;
+  userSurname: string;
+  userEmail: string;
+  userRole: UserRole;
+}
