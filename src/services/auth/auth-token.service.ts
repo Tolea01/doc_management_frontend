@@ -5,7 +5,7 @@ class AuthTokenService {
   protected tokenOptions = {
     domain: 'localhost',
     sameSite: 'lax' as 'lax',
-    expires: 1,
+    expires: 15 / (24 * 60),
   };
 
   getAccessToken(): string | null {
