@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { EnumTokens } from '../../enums/tokens.enum';
+import { EnumTokens } from '@enums/tokens.enum';
 
 class AuthTokenService {
   protected tokenOptions = {

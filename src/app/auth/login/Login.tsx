@@ -1,19 +1,19 @@
 'use client';
 
+import { errorCatch } from '@api/api.helper';
+import Button from '@components/buttons/Button';
+import Checkbox from '@components/checkbox/Checkbox';
+import InputField from '@components/fields/InputField';
+import { DASHBOARD_PAGES } from '@config/pages-url.config';
+import { authService } from '@services/auth/auth.service';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { errorCatch } from '../../api/api.helper';
-import Button from '../../components/ui/buttons/Button';
-import Checkbox from '../../components/ui/checkbox/Checkbox';
-import InputField from '../../components/ui/fields/InputField';
-import { DASHBOARD_PAGES } from '../../config/pages-url.config';
-import { authService } from '../../services/auth/auth.service';
-import { IAuthLoginForm } from '../../types/auth.types';
+import { IAuthLoginForm } from '../../../types/auth.types';
 import './style.css';
 
-export default function Auth() {
+export default function Login() {
   const { handleSubmit, reset, control } = useForm<IAuthLoginForm>({
     mode: 'onChange',
   });
@@ -26,7 +26,7 @@ export default function Auth() {
     onSuccess(data) {
       toast.success(`Bine ai venit ${data.data.user.name}!`);
       reset();
-      router.push(DASHBOARD_PAGES.HOME);
+      router.replace(DASHBOARD_PAGES.HOME);
     },
     onError(error: Error) {
       toast.error(errorCatch(error));

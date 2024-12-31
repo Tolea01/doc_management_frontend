@@ -1,6 +1,6 @@
+import { authTokenService } from '@services/auth/auth-token.service';
+import { authService } from '@services/auth/auth.service';
 import axios, { CreateAxiosDefaults } from 'axios';
-import { authTokenService } from '../services/auth/auth-token.service';
-import { authService } from '../services/auth/auth.service';
 import { errorCatch, getContentType } from './api.helper';
 
 const options: CreateAxiosDefaults = {

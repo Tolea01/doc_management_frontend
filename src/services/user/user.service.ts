@@ -1,5 +1,5 @@
+import { axiosWithAuth } from '@api/api.interceptor';
 import { AxiosResponse } from 'axios';
-import { axiosWithAuth } from '../../api/api.interceptor';
 import { ICurrentUser, IUserListResponse, IUserUpdate } from '../../types/user.type';
 
 class UserService {
