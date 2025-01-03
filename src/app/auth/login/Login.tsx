@@ -2,12 +2,12 @@
 
 import { errorCatch } from '@api/api.helper';
 import Button from '@components/buttons/Button';
-import Checkbox from '@components/checkbox/Checkbox';
 import InputField from '@components/fields/InputField';
 import { DASHBOARD_PAGES } from '@config/pages-url.config';
 import { authService } from '@services/auth/auth.service';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { IAuthLoginForm } from '../../../types/auth.types';
@@ -19,6 +19,20 @@ export default function Login() {
   });
 
   const router = useRouter();
+
+  useEffect(() => {
+    const emailFieldValue = document.getElementById(
+      'input-auth-email',
+    ) as HTMLInputElement;
+    const passwordFieldValue = document.getElementById(
+      'input-auth-password',
+    ) as HTMLInputElement;
+
+    reset({
+      email_address: emailFieldValue?.value || '',
+      password: passwordFieldValue?.value || '',
+    });
+  }, []);
 
   const { mutate } = useMutation({
     mutationKey: ['auth'],
@@ -37,9 +51,20 @@ export default function Login() {
     mutate(data);
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSubmit(onSubmit);
+    }
+  };
+
   return (
     <section className="auth-wrapper">
-      <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="auth-form"
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete="on"
+        onKeyDown={handleKeyPress}
+      >
         <h2 className="auth-title">
           AGENȚIA TERITORIALĂ DE ASISTENȚĂ SOCIALĂ NORD-NORD-VEST
         </h2>
@@ -53,15 +78,15 @@ export default function Login() {
           name="email_address"
           id="input-auth-email"
         />
-        <InputField
+        <InputField<IAuthLoginForm>
           type="password"
           label="Parola"
           placeholder="Introduceți parola..."
+          className="auth-input"
           control={control}
           name="password"
           id="input-auth-password"
         />
-        <Checkbox label="Memorează parola" className="mb-3" id="auth-checkbox" />
         <div className="auth-button">
           <Button value="Intră" variant="primary" size="medium" type="submit" />
         </div>
