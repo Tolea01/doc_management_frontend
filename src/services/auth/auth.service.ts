@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { axiosClassic } from '../../api/api.interceptor';
+import { AxiosResponse } from 'axios';
+import { axiosClassic, axiosWithAuth } from '../../api/api.interceptor';
 import {
   IAuthLoginForm,
   IAuthLoginResponse,
@@ -8,14 +8,15 @@ import {
   IAuthRegisterResponse,
 } from '../../types/auth.types';
 import { authTokenService } from './auth-token.service';
+import { ICurrentUser } from '../../types/user.type'
 
 class AuthService {
   private BASE_URL = '/auth';
 
   async login(
     data: IAuthLoginForm,
-  ): Promise<axios.AxiosResponse<IAuthLoginResponse, any>> {
-    const response: axios.AxiosResponse<IAuthLoginResponse, any> =
+  ): Promise<AxiosResponse<IAuthLoginResponse, any>> {
+    const response: AxiosResponse<IAuthLoginResponse, any> =
       await axiosClassic.post<IAuthLoginResponse>(`${this.BASE_URL}/login`, data);
 
     if (response.data.accessToken) {
@@ -27,15 +28,22 @@ class AuthService {
 
   async register(
     data: IAuthRegisterForm,
-  ): Promise<axios.AxiosResponse<IAuthRegisterResponse, any>> {
-    const response: axios.AxiosResponse<IAuthRegisterResponse, any> =
+  ): Promise<AxiosResponse<IAuthRegisterResponse, any>> {
+    const response: AxiosResponse<IAuthRegisterResponse, any> =
       await axiosClassic.post<IAuthRegisterResponse>(`${this.BASE_URL}/register`, data);
 
     return response;
   }
 
+  async getCurrent(): Promise<AxiosResponse<ICurrentUser, any>> {
+    const response: AxiosResponse<ICurrentUser, any> =
+      await axiosWithAuth.get<ICurrentUser>(`${this.BASE_URL}/me`);
+
+    return response;
+  }
+
   async getNewTokens(): Promise<void> {
-    const response: axios.AxiosResponse<IAuthRefreshTokens, any> =
+    const response: AxiosResponse<IAuthRefreshTokens, any> =
       await axiosClassic.post<IAuthRefreshTokens>(`${this.BASE_URL}/refresh-tokens`);
 
     if (response.data.accessToken) {
@@ -43,8 +51,8 @@ class AuthService {
     }
   }
 
-  async logout(): Promise<axios.AxiosResponse<boolean, any>> {
-    const response: axios.AxiosResponse<boolean, any> = await axiosClassic.post<boolean>(
+  async logout(): Promise<AxiosResponse<boolean, any>> {
+    const response: AxiosResponse<boolean, any> = await axiosClassic.post<boolean>(
       `${this.BASE_URL}/logout`,
     );
 

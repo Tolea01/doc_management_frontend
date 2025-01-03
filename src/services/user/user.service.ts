@@ -1,9 +1,9 @@
 import { axiosWithAuth } from '@api/api.interceptor';
 import { AxiosResponse } from 'axios';
-import { ICurrentUser, IUserListResponse, IUserUpdate } from '../../types/user.type';
+import { IUserListResponse, IUserUpdate } from '../../types/user.type';
 
 class UserService {
-  private BASE_URL = '/api/user';
+  private BASE_URL = '/user';
 
   async getAll(): Promise<AxiosResponse<IUserListResponse, any>> {
     const response: AxiosResponse<IUserListResponse, any> =
@@ -15,13 +15,6 @@ class UserService {
   async getById(id: string): Promise<AxiosResponse<IUserListResponse, any>> {
     const response: AxiosResponse<IUserListResponse, any> =
       await axiosWithAuth.get<IUserListResponse>(`${this.BASE_URL}/${id}`);
-
-    return response;
-  }
-
-  async getCurrent(): Promise<AxiosResponse<ICurrentUser, any>> {
-    const response: AxiosResponse<ICurrentUser, any> =
-      await axiosWithAuth.get<ICurrentUser>(`${this.BASE_URL}/me`);
 
     return response;
   }
