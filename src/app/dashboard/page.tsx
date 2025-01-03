@@ -1,6 +1,6 @@
 'use client';
 
-import withAuth from '../../hoc/withAuth';
+import withAuth from '../../hocs/withAuth';
 
 // export const metadada: Metadata = {
 //   ...NO_INDEX_PAGE,
