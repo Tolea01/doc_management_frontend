@@ -35,7 +35,7 @@ export default function Login() {
   }, []);
 
   const { mutate } = useMutation({
-    mutationKey: ['auth'],
+    mutationKey: ['auth', 'login'],
     mutationFn: (data: IAuthLoginForm) => authService.login(data),
     onSuccess(data) {
       toast.success(`Bine ai venit ${data.data.user.name}!`);
