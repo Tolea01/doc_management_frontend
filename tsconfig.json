@@ -20,6 +20,7 @@
     ],
     "paths": {
       "@app/*": ["./src/app/*"],
+      "@management/*": ["./src/app/management/*"],
       "@api/*": ["./src/api/*"],
       "@constants/*": ["./src/constants/*"],
       "@components/*": ["./src/components/ui/*"],

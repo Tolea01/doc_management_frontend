@@ -3,7 +3,7 @@
 import { errorCatch } from '@api/api.helper';
 import Button from '@components/buttons/Button';
 import InputField from '@components/fields/InputField';
-import { DASHBOARD_PAGES } from '@config/pages-url.config';
+import DASHBOARD_PAGES from '@config/pages-url.config';
 import { authService } from '@services/auth/auth.service';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -38,9 +38,10 @@ export default function Login() {
     mutationKey: ['auth', 'login'],
     mutationFn: (data: IAuthLoginForm) => authService.login(data),
     onSuccess(data) {
-      toast.success(`Bine ai venit ${data.data.user.name}!`);
+      const user = data.data.user;
       reset();
-      router.replace(DASHBOARD_PAGES.HOME);
+      router.replace(new DASHBOARD_PAGES(user.role).HOME);
+      toast.success(`Bine ai venit ${user.name}!`);
     },
     onError(error: Error) {
       toast.error(errorCatch(error));

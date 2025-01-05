@@ -1,7 +1,10 @@
-class DASHBOARD {
-  private root = '/dashboard';
+export default class DASHBOARD_PAGES {
+  userRole?: string;
+  private root: string = '/management';
+  HOME: string;
 
-  HOME = this.root;
+  constructor(userRole?: string) {
+    this.userRole = userRole;
+    this.HOME = `${this.root}/${this.userRole}/dashboard`;
+  }
 }
-
-export const DASHBOARD_PAGES = new DASHBOARD();
