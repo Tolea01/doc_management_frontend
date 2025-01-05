@@ -1,6 +1,7 @@
 import DASHBOARD_PAGES from '@config/pages-url.config';
 import { protectedRoutes } from '@config/routes.config';
 import { EnumTokens } from '@enums/tokens.enum';
+import { UserRole } from '@enums/user-role.enum'
 import { jwtVerify } from 'jose';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -26,7 +27,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
       new TextEncoder().encode(process.env.JWT_SECRET),
     );
 
-    const userRole: string = decodedToken.payload.props.role;
+    const userRole: UserRole = decodedToken.payload.props.role;
     const allowedRoles: string[] | [] = protectedRoutes[nextUrl.pathname] || [];
 
     if (allowedRoles.length && !allowedRoles.includes(userRole)) {
