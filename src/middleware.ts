@@ -9,8 +9,8 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
   const refreshToken: string | undefined = cookies.get(EnumTokens.REFRESH_TOKEN)?.value;
 
-  const isAdminPage = url.includes('/management/admin');
-  const isAuthPage = url.includes('/auth');
+  const isAdminPage: boolean = url.includes('/management/admin');
+  const isAuthPage: boolean = url.includes('/auth');
 
   if (!refreshToken && isAuthPage) {
     return NextResponse.next();
@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     );
 
     const userRole: string = decodedToken.payload.props.role;
-    const allowedRoles = protectedRoutes[nextUrl.pathname] || [];
+    const allowedRoles: string[] | [] = protectedRoutes[nextUrl.pathname] || [];
 
     if (allowedRoles.length && !allowedRoles.includes(userRole)) {
       return NextResponse.redirect(new URL('/403', url));

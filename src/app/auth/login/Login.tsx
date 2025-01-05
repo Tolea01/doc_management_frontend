@@ -6,25 +6,27 @@ import InputField from '@components/fields/InputField';
 import DASHBOARD_PAGES from '@config/pages-url.config';
 import { authService } from '@services/auth/auth.service';
 import { useMutation } from '@tanstack/react-query';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { IAuthLoginForm } from '../../../types/auth.types';
 import './style.css';
+import { IUser } from '../../../types/user.type'
 
 export default function Login() {
   const { handleSubmit, reset, control } = useForm<IAuthLoginForm>({
     mode: 'onChange',
   });
 
-  const router = useRouter();
+  const router: AppRouterInstance = useRouter();
 
   useEffect(() => {
-    const emailFieldValue = document.getElementById(
+    const emailFieldValue: HTMLInputElement = document.getElementById(
       'input-auth-email',
     ) as HTMLInputElement;
-    const passwordFieldValue = document.getElementById(
+    const passwordFieldValue: HTMLInputElement = document.getElementById(
       'input-auth-password',
     ) as HTMLInputElement;
 
@@ -38,7 +40,7 @@ export default function Login() {
     mutationKey: ['auth', 'login'],
     mutationFn: (data: IAuthLoginForm) => authService.login(data),
     onSuccess(data) {
-      const user = data.data.user;
+      const user: Partial<IUser> = data.data.user;
       reset();
       router.replace(new DASHBOARD_PAGES(user.role).HOME);
       toast.success(`Bine ai venit ${user.name}!`);
@@ -52,7 +54,7 @@ export default function Login() {
     mutate(data);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e: React.KeyboardEvent): void => {
     if (e.key === 'Enter') {
       handleSubmit(onSubmit);
     }
