@@ -8,6 +8,8 @@ export default class DASHBOARD_PAGES {
   EXIT_DOCUMENTS: string;
   INTERNAL_DOCUMENTS: string;
   USERS: string;
+  PERSONS: string;
+  SETTINGS: string;
 
   constructor(userRole?: UserRole) {
     this.userRole = userRole;
@@ -16,5 +18,7 @@ export default class DASHBOARD_PAGES {
     this.EXIT_DOCUMENTS = `${this.root}/${this.userRole}/dashboard/exit-documents`;
     this.INTERNAL_DOCUMENTS = `${this.root}/${this.userRole}/dashboard/internal-documents`;
     this.USERS = `${this.root}/${this.userRole}/dashboard/users`;
+    this.PERSONS = `${this.root}/${this.userRole}/dashboard/persons`;
+    this.SETTINGS = `${this.root}/${this.userRole}/dashboard/settings`;
   }
 }
