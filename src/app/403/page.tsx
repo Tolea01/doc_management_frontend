@@ -1,6 +1,6 @@
 export default function ForbidenPage() {
   return (
-    <div className="w-screen h-screen font-sans text-center m-0 bg-gradient-to-r from-[#2563eb] to-[#649fdb] bg-fixed text-white">
+    <div className="absolute inset-0 z-50 font-sans text-center m-0 bg-gradient-to-r from-[#2563eb] to-[#649fdb] bg-fixed text-white">
       <img
         src="https://images.plurk.com/5pHVCIyRNMdudWmVrrtQ.png"
         className="w-64 mx-auto pt-12"

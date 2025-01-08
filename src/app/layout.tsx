@@ -1,4 +1,5 @@
 import '@app/globals.scss';
+import Sidebar from '@components/sidebar/Sidebar';
 import { SITE_NAME } from '@constants/seo.constants';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -25,22 +26,25 @@ export default function RootLayout({
   return (
     <html lang="ro">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <Providers>
-          {children}
-          <Toaster
-            toastOptions={{
-              classNames: {
-                error: 'toast danger',
-                success: 'toast success',
-                warning: 'toast warning',
-                info: 'toast info',
-              },
-            }}
-            theme="light"
-            position="top-center"
-            duration={2000}
-          />
-        </Providers>
+        <Sidebar />
+        <main className='main-content'>
+          <Providers>
+            {children}
+            <Toaster
+              toastOptions={{
+                classNames: {
+                  error: 'toast danger',
+                  success: 'toast success',
+                  warning: 'toast warning',
+                  info: 'toast info',
+                },
+              }}
+              theme="light"
+              position="top-center"
+              duration={2000}
+            />
+          </Providers>
+        </main>
       </body>
     </html>
   );

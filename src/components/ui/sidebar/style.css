@@ -1,0 +1,53 @@
+.sidebar-container {
+  @apply flex;
+}
+
+.sidebar {
+  @apply flex h-screen w-16 flex-col justify-between border-e bg-white;
+}
+
+.menu-button {
+  @apply inline-flex size-16 items-center justify-center text-gray-500 relative rounded p-2 hover:bg-blue-100 hover:text-primary hover:cursor-pointer;
+}
+
+.menu-tooltip,
+.link-tooltip,
+.logout-tooltip {
+  @apply invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-primary p-2 text-xs font-medium text-white;
+}
+
+.sidebar-items {
+  @apply border-t border-gray-200;
+}
+
+.sidebar-items-list {
+  @apply space-y-2 border-gray-100;
+}
+
+.sidebar-link {
+  @apply relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-blue-100 hover:text-primary;
+}
+
+.sidebar-footer {
+  @apply sticky inset-x-0 bottom-0 border-t border-gray-200 bg-white p-2;
+}
+
+.logout-button {
+  @apply relative flex w-full justify-center rounded-lg p-1.5 text-sm text-gray-500 hover:bg-blue-100 hover:text-primary;
+}
+
+.sidebar-expanded {
+  @apply flex h-screen flex-1 flex-col justify-between border-e bg-white;
+}
+
+.expanded-content {
+  @apply p-4;
+}
+
+.expanded-links {
+  @apply mt-14 space-y-1.5;
+}
+
+.expanded-link {
+  @apply block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-primary hover:text-white;
+}
