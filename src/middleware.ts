@@ -13,10 +13,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const isAdminPage: boolean = url.includes('/management/admin');
   const isAuthPage: boolean = url.includes('/auth');
 
-  const removeLocalStorageItem = (item: string): void => localStorage.removeItem(item);
-
   if (!refreshToken && isAuthPage) {
-    removeLocalStorageItem('user');
     return NextResponse.next();
   }
 
