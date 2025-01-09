@@ -12,8 +12,8 @@ import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { IAuthLoginForm } from '../../../types/auth.types';
+import { IUser } from '../../../types/user.type';
 import './style.css';
-import { IUser } from '../../../types/user.type'
 
 export default function Login() {
   const { handleSubmit, reset, control } = useForm<IAuthLoginForm>({
@@ -41,6 +41,7 @@ export default function Login() {
     mutationFn: (data: IAuthLoginForm) => authService.login(data),
     onSuccess(data) {
       const user: Partial<IUser> = data.data.user;
+      localStorage.setItem('user', JSON.stringify(user));
       reset();
       router.replace(new DASHBOARD_PAGES(user.role).HOME);
       toast.success(`Bine ai venit ${user.name}!`);

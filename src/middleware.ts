@@ -1,7 +1,7 @@
 import DASHBOARD_PAGES from '@config/pages-url.config';
 import { protectedRoutes } from '@config/routes.config';
 import { EnumTokens } from '@enums/tokens.enum';
-import { UserRole } from '@enums/user-role.enum'
+import { UserRole } from '@enums/user-role.enum';
 import { jwtVerify } from 'jose';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -13,7 +13,10 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const isAdminPage: boolean = url.includes('/management/admin');
   const isAuthPage: boolean = url.includes('/auth');
 
+  const removeLocalStorageItem = (item: string): void => localStorage.removeItem(item);
+
   if (!refreshToken && isAuthPage) {
+    removeLocalStorageItem('user');
     return NextResponse.next();
   }
 
