@@ -7,15 +7,13 @@ import {
   IAuthRegisterForm,
   IAuthRegisterResponse,
 } from '../../types/auth.types';
+import { ICurrentUser } from '../../types/user.type';
 import { authTokenService } from './auth-token.service';
-import { ICurrentUser } from '../../types/user.type'
 
 class AuthService {
   private BASE_URL = '/auth';
 
-  async login(
-    data: IAuthLoginForm,
-  ): Promise<AxiosResponse<IAuthLoginResponse, any>> {
+  async login(data: IAuthLoginForm): Promise<AxiosResponse<IAuthLoginResponse, any>> {
     const response: AxiosResponse<IAuthLoginResponse, any> =
       await axiosClassic.post<IAuthLoginResponse>(`${this.BASE_URL}/login`, data);
 
@@ -42,17 +40,15 @@ class AuthService {
     return response;
   }
 
-  async getNewTokens(): Promise<void> {
+  async getNewAccessToken(): Promise<string | null> {
     const response: AxiosResponse<IAuthRefreshTokens, any> =
       await axiosClassic.post<IAuthRefreshTokens>(`${this.BASE_URL}/refresh-tokens`);
 
-    if (response.data.accessToken) {
-      authTokenService.saveTokenToStorage(response.data.accessToken);
-    }
+    return response.data.accessToken;
   }
 
   async logout(): Promise<AxiosResponse<boolean, any>> {
-    const response: AxiosResponse<boolean, any> = await axiosClassic.post<boolean>(
+    const response: AxiosResponse<boolean, any> = await axiosWithAuth.post<boolean>(
       `${this.BASE_URL}/logout`,
     );
 

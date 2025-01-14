@@ -5,7 +5,7 @@ import Button from '@components/buttons/Button';
 import InputField from '@components/fields/InputField';
 import DASHBOARD_PAGES from '@config/pages-url.config';
 import { authService } from '@services/auth/auth.service';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -16,6 +16,7 @@ import { IUser } from '../../../types/user.type';
 import './style.css';
 
 export default function Login() {
+  const queryClient = useQueryClient();
   const { handleSubmit, reset, control } = useForm<IAuthLoginForm>({
     mode: 'onChange',
   });
@@ -40,8 +41,8 @@ export default function Login() {
     mutationKey: ['auth', 'login'],
     mutationFn: (data: IAuthLoginForm) => authService.login(data),
     onSuccess(data) {
+      queryClient.invalidateQueries({ queryKey: ['userInfo'] });
       const user: Partial<IUser> = data.data.user;
-      localStorage.setItem('user', JSON.stringify(user));
       reset();
       router.replace(new DASHBOARD_PAGES(user.role).HOME);
       toast.success(`Bine ai venit ${user.name}!`);

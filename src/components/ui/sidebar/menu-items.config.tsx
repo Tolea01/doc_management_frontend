@@ -4,8 +4,9 @@ import { FaHome, FaRegUser } from 'react-icons/fa';
 import { FaPerson } from 'react-icons/fa6';
 import { IoDocumentSharp, IoDocumentTextSharp } from 'react-icons/io5';
 import { MdDocumentScanner, MdOutlineSettings } from 'react-icons/md';
+import { MenuItem } from '../../../types/menu.types';
 
-export const menuItems = {
+export const menuItems: Record<UserRole, MenuItem[]> = {
   [UserRole.ADMIN]: [
     {
       path: new DASHBOARD_PAGES(UserRole.ADMIN).HOME,
@@ -117,4 +118,13 @@ export const menuItems = {
       icon: <MdOutlineSettings size={25} />,
     },
   ],
+
+  [UserRole.ALL]: [],
 };
+
+menuItems[UserRole.ALL] = [
+  ...menuItems[UserRole.ADMIN],
+  ...menuItems[UserRole.DIRECTOR],
+  ...menuItems[UserRole.SECRETARY],
+  ...menuItems[UserRole.HEAD_OF_DIRECTION],
+];

@@ -1,11 +1,11 @@
-import Cookies from 'js-cookie';
 import { EnumTokens } from '@enums/tokens.enum';
+import Cookies from 'js-cookie';
 
 class AuthTokenService {
   protected tokenOptions = {
     domain: 'localhost',
-    sameSite: 'lax' as 'lax',
-    expires: 15 / (24 * 60),
+    sameSite: 'strict' as 'strict',
+    expires: 1 / (24 * 60),
   };
 
   getAccessToken(): string | null {

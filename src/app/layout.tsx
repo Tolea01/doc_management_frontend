@@ -26,9 +26,9 @@ export default function RootLayout({
   return (
     <html lang="ro">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <Sidebar />
-        <main className='main-content'>
-          <Providers>
+        <Providers>
+          <Sidebar />
+          <main className="main-content">
             {children}
             <Toaster
               toastOptions={{
@@ -43,8 +43,8 @@ export default function RootLayout({
               position="top-center"
               duration={2000}
             />
-          </Providers>
-        </main>
+          </main>
+        </Providers>
       </body>
     </html>
   );
