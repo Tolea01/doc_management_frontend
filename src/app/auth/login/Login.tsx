@@ -43,8 +43,8 @@ export default function Login() {
     onSuccess(data) {
       queryClient.invalidateQueries({ queryKey: ['userInfo'] });
       const user: Partial<IUser> = data.data.user;
-      reset();
       router.replace(new DASHBOARD_PAGES(user.role).HOME);
+      reset();
       toast.success(`Bine ai venit ${user.name}!`);
     },
     onError(error: Error) {

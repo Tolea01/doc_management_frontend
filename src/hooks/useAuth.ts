@@ -5,6 +5,7 @@ export const useAuth = () => {
   const { data, error, isLoading, isError } = useQuery({
     queryKey: ['userInfo'],
     queryFn: () => authService.getCurrent(),
+    retry: 1,
   });
 
   return {
