@@ -1,0 +1,23 @@
+.badge {
+  @apply inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset;
+}
+
+.badge.danger {
+  @apply text-red-700 ring-red-600/10;
+}
+
+.badge.info {
+  @apply bg-blue-50 ring-blue-700/10;
+}
+
+.badge.success {
+  @apply text-green-700 ring-green-600/20;
+}
+
+.badge.warning {
+  @apply text-yellow-800 ring-yellow-600/20;
+}
+
+.badge.default {
+  @apply bg-gray-50 ring-gray-500/10;
+}

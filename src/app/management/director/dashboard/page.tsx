@@ -5,6 +5,6 @@ export const metadada: Metadata = {
   ...NO_INDEX_PAGE,
 };
 
-export default function adminPage() {
-  return <p>director dashboard</p>;
+export default function directorPage() {
+  return <p>director page</p>;
 }
