@@ -13,7 +13,7 @@
 .menu-tooltip,
 .link-tooltip,
 .logout-tooltip {
-  @apply invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-primary p-2 text-xs font-medium text-white;
+  @apply invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-primary p-2 text-xs font-medium text-white z-30;
 }
 
 .sidebar-items {
