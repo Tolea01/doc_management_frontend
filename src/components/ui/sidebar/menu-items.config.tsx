@@ -42,7 +42,7 @@ export const menuItems: Record<UserRole, MenuItem[]> = {
       icon: <IoDocumentTextSharp size={25} />,
     },
     {
-      path: new DASHBOARD_PAGES(UserRole.DIRECTOR).ENTRY_DOCUMENTS,
+      path: new DASHBOARD_PAGES(UserRole.DIRECTOR).INTERNAL_DOCUMENTS,
       label: 'Documente interne',
       icon: <MdDocumentScanner size={25} />,
     },
@@ -75,7 +75,7 @@ export const menuItems: Record<UserRole, MenuItem[]> = {
       icon: <IoDocumentTextSharp size={25} />,
     },
     {
-      path: new DASHBOARD_PAGES(UserRole.SECRETARY).ENTRY_DOCUMENTS,
+      path: new DASHBOARD_PAGES(UserRole.SECRETARY).INTERNAL_DOCUMENTS,
       label: 'Documente interne',
       icon: <MdDocumentScanner size={25} />,
     },
@@ -108,7 +108,7 @@ export const menuItems: Record<UserRole, MenuItem[]> = {
       icon: <IoDocumentTextSharp size={25} />,
     },
     {
-      path: new DASHBOARD_PAGES(UserRole.SECRETARY).ENTRY_DOCUMENTS,
+      path: new DASHBOARD_PAGES(UserRole.SECRETARY).INTERNAL_DOCUMENTS,
       label: 'Documente interne',
       icon: <MdDocumentScanner size={25} />,
     },

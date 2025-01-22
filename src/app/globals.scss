@@ -52,3 +52,19 @@ input:-webkit-autofill:active {
   -webkit-background-clip: text !important;
   background-clip: text !important;
 }
+
+.page-header {
+  @apply mb-7;
+}
+
+.page-title {
+  @apply text-lg;
+}
+
+.search-document-form {
+  @apply mb-5 flex flex-col lg:flex-row lg:justify-between;
+}
+
+.search-document-selector {
+  @apply flex flex-col lg:flex-row gap-4 w-full lg:w-auto
+}

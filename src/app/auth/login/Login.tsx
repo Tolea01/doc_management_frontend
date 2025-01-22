@@ -82,6 +82,7 @@ export default function Login() {
           control={control}
           name="email_address"
           id="input-auth-email"
+          size="large"
         />
         <InputField<IAuthLoginForm>
           type="password"
@@ -91,9 +92,15 @@ export default function Login() {
           control={control}
           name="password"
           id="input-auth-password"
+          size="large"
         />
         <div className="auth-button">
-          <Button value="Intră" variant="primary" size="medium" type="submit" />
+          <Button
+            value="Intră"
+            variant="primary"
+            size="medium"
+            type="submit"
+          />
         </div>
       </form>
     </section>

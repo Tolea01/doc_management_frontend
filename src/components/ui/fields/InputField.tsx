@@ -14,6 +14,7 @@ interface FieldsProps<T extends FieldValues> {
   className?: string;
   inputProps?: React.InputHTMLAttributes<HTMLElement>;
   disabled?: boolean;
+  size: 'small' | 'medium' | 'large' | 'extra-large';
 }
 
 export default function InputField<T extends FieldValues>({
@@ -27,6 +28,7 @@ export default function InputField<T extends FieldValues>({
   className,
   inputProps,
   disabled,
+  size,
 }: FieldsProps<T>): JSX.Element {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -45,7 +47,7 @@ export default function InputField<T extends FieldValues>({
           </label>
           <input
             id={id}
-            className="input-field"
+            className={`input-field ${size}`}
             type={inputType}
             placeholder={placeholder}
             disabled={disabled}

@@ -1,9 +1,25 @@
 .input-fieldset {
-  @apply w-full min-w-[200px] relative;
+  @apply relative;
 }
 
 .input-field {
-  @apply w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border-2 border-slate-300 rounded-md p-3 transition duration-300 ease-linear focus:outline-none focus:border-primary hover:border-slate-400 shadow-sm focus:shadow;
+  @apply w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border-2 border-slate-300 rounded-md  transition duration-300 ease-linear focus:outline-none focus:border-primary hover:border-slate-400 shadow-sm focus:shadow;
+}
+
+.input-field.small {
+  @apply p-1.5;
+}
+
+.input-field.medium {
+  @apply p-2;
+}
+
+.input-field.large {
+  @apply p-3;
+}
+
+.input-field.extra-large {
+  @apply p-3;
 }
 
 .input-label {
@@ -20,4 +36,11 @@
 
 .password-toogle {
   @apply text-slate-400 text-lg absolute top-1/2 transform -translate-x-7 -translate-y-1/2;
+}
+
+.select-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  @apply px-3 py-1.5 border-gray-200 rounded text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none;
 }
