@@ -1,0 +1,39 @@
+.modal-overlay {
+    @apply fixed inset-0 z-[1000] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-500 opacity-0 invisible;
+}
+
+.modal-overlay--visible {
+    @apply opacity-100 visible;
+}
+
+.modal-container {
+    @apply relative m-4 p-4 w-3/4 rounded-lg bg-white shadow-sm transition-transform duration-500 scale-90 opacity-0;
+}
+
+.modal-container--visible {
+    @apply scale-100 opacity-100;
+}
+
+.modal-header {
+    @apply flex shrink-0 items-center pb-4 text-xl font-medium text-slate-800;
+}
+
+.modal-body {
+    @apply relative border-t border-slate-200 py-4 leading-normal text-slate-600 font-light;
+}
+
+.modal-footer {
+    @apply flex shrink-0 flex-wrap items-center pt-4 justify-end;
+}
+
+.modal-button {
+    @apply rounded-md border border-transparent py-2 px-4 text-center text-sm transition-all;
+}
+
+.modal-button--cancel {
+    @apply text-slate-600 hover:bg-slate-100;
+}
+
+.modal-button--confirm {
+    @apply bg-green-600 text-white ml-2 hover:bg-green-700;
+}
