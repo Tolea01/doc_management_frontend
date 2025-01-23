@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function ModalXL() {
+export default function Modal() {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
@@ -11,7 +11,6 @@ export default function ModalXL() {
   return (
     <>
       <div className="mb-3 flex gap-3">
-        {/* Butonul pentru a deschide modalul */}
         <button
           onClick={openModal}
           className="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
@@ -19,32 +18,25 @@ export default function ModalXL() {
         >
           Open Modal XL
         </button>
-
-        {/* Modalul */}
         <div
           className={`fixed inset-0 z-[1000] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-500 ${
             isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
           }`}
         >
           <div
-            className={`relative m-4 p-4 w-3/4 rounded-lg bg-white shadow-sm transition-transform transition-opacity duration-500 ${
+            className={`relative m-4 p-4 w-3/4 rounded-lg bg-white shadow-sm transition-transform duration-500 ${
               isOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0'
             }`}
           >
-            {/* Titlu */}
             <div className="flex shrink-0 items-center pb-4 text-xl font-medium text-slate-800">
               It's a simple modal.
             </div>
-
-            {/* Conținut */}
             <div className="relative border-t border-slate-200 py-4 leading-normal text-slate-600 font-light">
               The key to more success is to have a lot of pillows. Put it this way, it
               took me twenty-five years to get these plants, twenty-five years of blood,
               sweat, and tears, and I&apos;m never giving up, I&apos;m just getting
               started. I&apos;m up to something. Fan luv.
             </div>
-
-            {/* Butoane pentru închidere */}
             <div className="flex shrink-0 flex-wrap items-center pt-4 justify-end">
               <button
                 onClick={closeModal}
