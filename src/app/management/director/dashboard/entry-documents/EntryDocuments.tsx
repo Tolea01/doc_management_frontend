@@ -6,9 +6,15 @@ import SelectInputField from '@components/fields/SelectInputField';
 import Table from '@components/tables/Table';
 import { useForm } from 'react-hook-form';
 import './style.css';
+import { useState } from 'react';
+import Modal from '@components/modal/Modal';
+import { useAuth } from '../../../../../hooks/useAuth';
+import Loader from '@components/loaders/Loader';
 
 export default function EntryDocuments() {
   const { control, handleSubmit } = useForm({ mode: 'onChange' });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { loading } = useAuth();
   const selectOptions = ['valoare1', 'valoare2', 'valoare3'];
   const columns = ['Product name', 'Color', 'Category', 'Price'];
   const data = [
@@ -32,8 +38,15 @@ export default function EntryDocuments() {
     },
   ];
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <section>
+      <header className="page-header">
+        <h1 className="page-title">Documente de intrare</h1>
+      </header>
       <form className="search-document-form">
         <div className="mb-4 lg:mb-0">
           <InputField
@@ -47,7 +60,12 @@ export default function EntryDocuments() {
           />
         </div>
         <div className="search-document-selector">
-          <Button size="small" variant="primary" value="adaugă" />
+          <Button
+            size="small"
+            variant="primary"
+            value="adaugă"
+            onClick={() => setIsModalOpen(!isModalOpen)}
+          />
           <SelectInputField
             options={selectOptions}
             selectedValue="alege opțiunea"
@@ -68,6 +86,13 @@ export default function EntryDocuments() {
       <article>
         <Table columns={columns} data={data} />
       </article>
+      <Modal
+        modalHeader={'Adauga document'}
+        modalBody={<p>adauga document</p>}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={() => setIsModalOpen(false)}
+      />
     </section>
   );
 }

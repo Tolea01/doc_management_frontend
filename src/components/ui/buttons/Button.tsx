@@ -1,7 +1,8 @@
 import './style.css';
+import React from 'react';
 
 interface ButtonProps {
-  value: string;
+  value: string | React.ReactNode;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;

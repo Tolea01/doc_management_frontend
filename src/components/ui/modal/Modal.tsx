@@ -26,8 +26,8 @@ export default function Modal({
           <div className="modal-header">{modalHeader}</div>
           <div className="modal-body">{modalBody}</div>
           <div className="modal-footer">
-            <Button value="închide" variant="secondary" size="medium" onClick={onClose} />
-            <Button value="confirm" variant="primary" size="medium" onClick={onConfirm} />
+            <Button value="închide" variant="secondary" size="small" onClick={onClose} />
+            <Button value="confirm" variant="primary" size="small" onClick={onConfirm} />
           </div>
         </div>
       </div>

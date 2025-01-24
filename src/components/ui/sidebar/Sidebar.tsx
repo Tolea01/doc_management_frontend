@@ -16,6 +16,7 @@ import { menuItems } from './menu-items.config';
 import './style.css';
 import { MenuItem } from '../../../types/menu.types';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import Link from 'next/link';
 
 export default function Sidebar() {
   const pathname: string = usePathname();
@@ -65,7 +66,7 @@ export default function Sidebar() {
 
                   return (
                     <li key={index}>
-                      <a
+                      <Link
                         href={item.path}
                         className={`sidebar-link group ${isActive ? 'active' : ''}`}
                       >
@@ -73,7 +74,7 @@ export default function Sidebar() {
                         <span className="link-tooltip group-hover:visible">
                           {item.label}
                         </span>
-                      </a>
+                      </Link>
                     </li>
                   );
                 })}
@@ -100,17 +101,17 @@ export default function Sidebar() {
         <div className="sidebar-expanded">
           <div className="expanded-content">
             <ul className="expanded-links">
-              {menuItems[role].map((item, index) => {
+              {menuItems[role].map((item: MenuItem, index: number) => {
                 const isActive = pathname === item.path;
 
                 return (
                   <li key={index}>
-                    <a
+                    <Link
                       href={item.path}
                       className={`expanded-link ${isActive ? 'active' : ''}`}
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 );
               })}
