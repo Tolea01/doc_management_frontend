@@ -5,10 +5,9 @@ import Button from '@components/buttons/Button';
 import InputField from '@components/fields/InputField';
 import DASHBOARD_PAGES from '@config/pages-url.config';
 import { authService } from '@services/auth/auth.service';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { IAuthLoginForm } from '../../../types/auth.types';
@@ -16,43 +15,33 @@ import { IUser } from '../../../types/user.type';
 import './style.css';
 
 export default function Login() {
-  const queryClient = useQueryClient();
+  const queryClient: QueryClient = useQueryClient();
   const { handleSubmit, reset, control } = useForm<IAuthLoginForm>({
     mode: 'onChange',
+    defaultValues: {
+      email_address: '',
+      password: '',
+    },
   });
 
   const router: AppRouterInstance = useRouter();
 
-  useEffect(() => {
-    const emailFieldValue: HTMLInputElement = document.getElementById(
-      'input-auth-email',
-    ) as HTMLInputElement;
-    const passwordFieldValue: HTMLInputElement = document.getElementById(
-      'input-auth-password',
-    ) as HTMLInputElement;
-
-    reset({
-      email_address: emailFieldValue?.value || '',
-      password: passwordFieldValue?.value || '',
-    });
-  }, []);
-
   const { mutate } = useMutation({
     mutationKey: ['auth', 'login'],
     mutationFn: (data: IAuthLoginForm) => authService.login(data),
-    onSuccess(data) {
+    onSuccess(data): void {
       queryClient.invalidateQueries({ queryKey: ['userInfo'] });
       const user: Partial<IUser> = data.data.user;
       router.replace(new DASHBOARD_PAGES(user.role).HOME);
       reset();
       toast.success(`Bine ai venit ${user.name}!`);
     },
-    onError(error: Error) {
+    onError(error: Error): void {
       toast.error(errorCatch(error));
     },
   });
 
-  const onSubmit: SubmitHandler<IAuthLoginForm> = (data: IAuthLoginForm) => {
+  const onSubmit: SubmitHandler<IAuthLoginForm> = (data: IAuthLoginForm): void => {
     mutate(data);
   };
 
@@ -95,12 +84,7 @@ export default function Login() {
           size="large"
         />
         <div className="auth-button">
-          <Button
-            value="Intră"
-            variant="primary"
-            size="medium"
-            type="submit"
-          />
+          <Button value="Intră" variant="primary" size="medium" type="submit" />
         </div>
       </form>
     </section>

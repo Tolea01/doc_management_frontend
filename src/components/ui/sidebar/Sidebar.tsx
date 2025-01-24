@@ -1,25 +1,27 @@
 'use client';
 
-import { errorCatch } from '@api/api.helper'
-import Loader from '@components/loaders/Loader'
-import { publicRoutes } from '@config/routes.config'
-import { authService } from '@services/auth/auth.service'
-import { useMutation } from '@tanstack/react-query'
-import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { IoMdMenu } from 'react-icons/io'
-import { LuLogOut } from 'react-icons/lu'
-import { MdMenuOpen } from 'react-icons/md'
-import { toast } from 'sonner'
-import { useAuth } from '../../../hooks/useAuth'
-import { menuItems } from './menu-items.config'
-import './style.css'
+import { errorCatch } from '@api/api.helper';
+import Loader from '@components/loaders/Loader';
+import { publicRoutes } from '@config/routes.config';
+import { authService } from '@services/auth/auth.service';
+import { useMutation } from '@tanstack/react-query';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { IoMdMenu } from 'react-icons/io';
+import { LuLogOut } from 'react-icons/lu';
+import { MdMenuOpen } from 'react-icons/md';
+import { toast } from 'sonner';
+import { useAuth } from '../../../hooks/useAuth';
+import { menuItems } from './menu-items.config';
+import './style.css';
+import { MenuItem } from '../../../types/menu.types';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 export default function Sidebar() {
-  const pathname = usePathname();
+  const pathname: string = usePathname();
   const [isSidebarOpen, setISidebarOpen] = useState<boolean>(false);
   const { role, loading } = useAuth();
-  const router = useRouter();
+  const router: AppRouterInstance = useRouter();
 
   const { mutate } = useMutation({
     mutationKey: ['logout'],
@@ -32,7 +34,9 @@ export default function Sidebar() {
     },
   });
 
-  const showSidebar = ![...publicRoutes, '/401', '/403', '/404'].includes(pathname);
+  const showSidebar: boolean = ![...publicRoutes, '/401', '/403', '/404'].includes(
+    pathname,
+  );
 
   const toggleSidebar = () => {
     setISidebarOpen(!isSidebarOpen);
@@ -56,7 +60,7 @@ export default function Sidebar() {
           <div className="sidebar-items">
             <div className="px-1">
               <ul className="sidebar-items-list">
-                {menuItems[role].map((item, index) => {
+                {menuItems[role].map((item: MenuItem, index: number) => {
                   const isActive = pathname === item.path;
 
                   return (
