@@ -8,13 +8,23 @@ import { HiOutlineDocumentRemove } from 'react-icons/hi';
 
 interface TableProps {
   columns: string[];
-  data: { [key: string]: any }[];
+  data: any;
 }
 
 export default function Table({ columns, data }: TableProps) {
   const { role } = useAuth();
   const allowEditAccess: boolean =
     role === UserRole.SECRETARY || role === UserRole.DIRECTOR;
+
+  console.log(data[0]);
+
+  if (!Array.isArray(data)) {
+    return (
+      <div className="error-message">
+        <p>Datele nu sunt disponibile sau au un format incorect.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="table-container">
@@ -28,27 +38,30 @@ export default function Table({ columns, data }: TableProps) {
             ))}
             {allowEditAccess && (
               <th scope="col" className="table-th">
-                Acțiune
+                Acțiuni
               </th>
             )}
           </tr>
         </thead>
         <tbody>
-          {data.map((row: { [key: string]: any }, rowIndex: number) => (
+          {data.map((row: any, rowIndex: number) => (
             <tr key={rowIndex} className="table-row">
+              {/*<td className="table-td">{data[row]}</td>*/}
               {columns.map((col: string, colIndex: number) => (
                 <td key={colIndex} className="table-td">
-                  {row[col]}
+                  {<p>dsasd</p>}
                 </td>
               ))}
-              <td className="table-td md:space-x-5 md:flex justify-center">
-                <button className={'flex text-primary'}>
-                  Modifică <FaRegEdit className={'ml-2'} size={17} />
-                </button>
-                <button className={'flex text-red-500 mt-2 md:mt-0'}>
-                  Șterge <HiOutlineDocumentRemove className={'ml-2'} size={17} />
-                </button>
-              </td>
+              {allowEditAccess && (
+                <td className="table-td md:space-x-5 md:flex justify-center">
+                  <button className={'flex text-primary'}>
+                    Modifică <FaRegEdit className={'ml-2'} size={17} />
+                  </button>
+                  <button className={'flex text-red-500 mt-2 md:mt-0'}>
+                    Șterge <HiOutlineDocumentRemove className={'ml-2'} size={17} />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

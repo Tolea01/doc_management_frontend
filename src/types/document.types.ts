@@ -1,4 +1,4 @@
-import { DocumentStatus } from '../enums/document-status.enum'
+import { DocumentStatus } from '../enums/document-status.enum';
 
 export interface IEntryDocument {
   id: number;

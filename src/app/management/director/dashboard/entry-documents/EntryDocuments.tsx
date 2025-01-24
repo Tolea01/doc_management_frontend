@@ -10,37 +10,48 @@ import { useState } from 'react';
 import Modal from '@components/modal/Modal';
 import { useAuth } from '../../../../../hooks/useAuth';
 import Loader from '@components/loaders/Loader';
+import { useQuery } from '@tanstack/react-query';
+import { entryDocumentService } from '@services/entry-document/entry-document.service';
 
 export default function EntryDocuments() {
   const { control, handleSubmit } = useForm({ mode: 'onChange' });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { loading } = useAuth();
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['entryDocuments'],
+    queryFn: () => entryDocumentService.getAll(),
+  });
   const selectOptions = ['valoare1', 'valoare2', 'valoare3'];
-  const columns = ['Product name', 'Color', 'Category', 'Price'];
-  const data = [
-    {
-      'Product name': 'Apple MacBook Pro 17"',
-      Color: 'Silver',
-      Category: 'Laptop',
-      Price: '$2999',
-    },
-    {
-      'Product name': 'Microsoft Surface Pro',
-      Color: 'White',
-      Category: 'Laptop PC',
-      Price: '$1999',
-    },
-    {
-      'Product name': 'Magic Mouse 2',
-      Color: 'Black',
-      Category: 'Accessories',
-      Price: '$99',
-    },
-  ];
+  const columns = ['ID', 'Număr', 'Data', 'Executor', 'Destinatar', 'Expeditor'];
 
-  if (loading) {
+  if (loading || isLoading) {
     return <Loader />;
   }
+
+  if (error) {
+    return (
+      <div className="error-message">
+        <p>Nu am putut încărca documentele. Încercați din nou mai târziu.</p>
+      </div>
+    );
+  }
+
+  if (!data?.data) {
+    return (
+      <div className="empty-data">
+        <p>Nu există documente disponibile.</p>
+      </div>
+    );
+  }
+
+  const tableData = data.data.data.map((doc: any) => ({
+    id: doc.id,
+    number: doc.number,
+    date: doc.date,
+    executor: doc.executors.map((e: any) => `${e.name} ${e.surname}`).join(', '),
+    received: doc.received.name,
+    sender: doc.sender.name,
+  }));
 
   return (
     <section>
@@ -84,7 +95,7 @@ export default function EntryDocuments() {
         </div>
       </form>
       <article>
-        <Table columns={columns} data={data} />
+        <Table columns={columns} data={tableData} />
       </article>
       <Modal
         modalHeader={'Adauga document'}
