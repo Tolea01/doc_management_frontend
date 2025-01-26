@@ -12,37 +12,35 @@ import { useAuth } from '../../../../../hooks/useAuth';
 import Loader from '@components/loaders/Loader';
 import { useQuery } from '@tanstack/react-query';
 import { entryDocumentService } from '@services/entry-document/entry-document.service';
+import Pagination from '@components/pagination/Pagination';
+import { toast } from 'sonner';
+import Badge from '@components/badges/Badge';
+import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
 
 export default function EntryDocuments() {
   const { control, handleSubmit } = useForm({ mode: 'onChange' });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
   const { loading } = useAuth();
   const { data, error, isLoading } = useQuery({
-    queryKey: ['entryDocuments'],
-    queryFn: () => entryDocumentService.getAll(),
+    queryKey: ['entryDocuments', currentPage],
+    queryFn: () => entryDocumentService.getAll(currentPage, itemsPerPage),
   });
-  const selectOptions = ['valoare1', 'valoare2', 'valoare3'];
+  const totalItems: any = data?.data?.total || 0;
+  const totalPages: number = Math.ceil(totalItems / itemsPerPage);
+  const selectOptions: string[] = ['valoare1', 'valoare2', 'valoare3'];
 
   if (loading || isLoading) {
     return <Loader />;
   }
 
   if (error) {
-    return (
-      <div className="error-message">
-        <p>Nu am putut încărca documentele. Încercați din nou mai târziu.</p>
-      </div>
-    );
+    toast.error('Nu s-a putut încărca documentele. Încercați din nou mai târziu.');
   }
 
   if (!data?.data) {
-    return (
-      <div className="empty-data">
-        <p>Nu există documente disponibile.</p>
-      </div>
-    );
-  } else {
-    console.log(data?.data);
+    toast.error('Nu există documente disponibile.');
   }
 
   const columns = [
@@ -57,7 +55,7 @@ export default function EntryDocuments() {
     { label: 'Termen', key: 'execution_time' },
   ];
 
-  const tableData = data.data.data.map((doc: any) => ({
+  const tableData = data?.data.data.map((doc: any) => ({
     id: doc.id,
     number: doc.number,
     date: doc.date,
@@ -73,10 +71,9 @@ export default function EntryDocuments() {
     )),
     received: doc.received.name,
     sender: doc.sender.name,
-    status: doc.status,
+    status: <Badge variant={getDocumentBadgeVariant(doc.status)} name={doc.status} />,
     execution_time: doc.execution_time,
   }));
-
 
   return (
     <section>
@@ -121,6 +118,13 @@ export default function EntryDocuments() {
       </form>
       <article>
         <Table columns={columns} data={tableData} />
+        <div className="pt-5 pb-5">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        </div>
       </article>
       <Modal
         modalHeader={'Adauga document'}

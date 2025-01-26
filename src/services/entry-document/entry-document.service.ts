@@ -5,9 +5,10 @@ import { AxiosResponse } from 'axios';
 class EntryDocumentService {
   private BASE_URL: string = '/entry-documents';
 
-  async getAll(): Promise<AxiosResponse<any>> {
+  async getAll(page: number = 1, limit: number = 10): Promise<AxiosResponse<any>> {
     const response: AxiosResponse<any, any> = await axiosWithAuth.get<IEntryDocument>(
       `${this.BASE_URL}/list`,
+      { params: { page, limit } },
     );
 
     return response;
