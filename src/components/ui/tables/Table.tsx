@@ -9,9 +9,11 @@ import { HiOutlineDocumentRemove } from 'react-icons/hi';
 interface TableProps {
   columns: { label: string; key: string }[];
   data: any[];
+  onModify: () => any;
+  onDelete: () => any;
 }
 
-export default function Table({ columns, data }: TableProps) {
+export default function Table({ columns, data, onDelete, onModify }: TableProps) {
   const { role } = useAuth();
   const allowEditAccess: boolean =
     role === UserRole.SECRETARY || role === UserRole.DIRECTOR;
@@ -29,7 +31,7 @@ export default function Table({ columns, data }: TableProps) {
       <table className="table">
         <thead className="table-head">
           <tr>
-            {columns.map((col, index) => (
+            {columns.map((col: { label: string; key: string }, index: number) => (
               <th key={index} scope="col" className="table-th">
                 {col.label}
               </th>
@@ -42,21 +44,26 @@ export default function Table({ columns, data }: TableProps) {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, rowIndex) => (
+          {data.map((row: any, rowIndex: number) => (
             <tr key={rowIndex} className="table-row">
-              {columns.map((col, colIndex) => (
+              {columns.map((col: { label: string; key: string }, colIndex: number) => (
                 <td key={colIndex} className="table-td">
                   {row[col.key] || '-'}
                 </td>
               ))}
               {allowEditAccess && (
-                <td className="table-td md:space-x-5 md:flex justify-center items-center">
-                  <button className={'flex text-primary'}>
-                    Modifică <FaRegEdit className={'ml-2'} size={17} />
-                  </button>
-                  <button className={'flex text-red-500 mt-2 md:mt-0'}>
-                    Șterge <HiOutlineDocumentRemove className={'ml-2'} size={17} />
-                  </button>
+                <td className="table-td">
+                  <div className="button-container">
+                    <button className="flex gap-x-2 text-primary" onClick={onModify}>
+                      Modifică <FaRegEdit size={17} />
+                    </button>
+                    <button
+                      className="flex gap-x-2 text-red-500 mt-2 md:mt-0"
+                      onClick={onDelete}
+                    >
+                      Șterge <HiOutlineDocumentRemove size={17} />
+                    </button>
+                  </div>
                 </td>
               )}
             </tr>

@@ -1,35 +1,39 @@
 .table-container {
-  @apply relative overflow-x-auto shadow-md sm:rounded-lg;
-}
-
-.table {
-  @apply w-full text-sm text-left text-gray-500;
+    @apply relative overflow-x-auto shadow-md sm:rounded-lg;
 }
 
 .table-head {
-  @apply text-xs text-gray-700 uppercase bg-gray-200;
+    @apply text-xs text-gray-700 uppercase bg-gray-200;
 }
 
 .table-th {
-  @apply px-6 py-3 text-center;
+    @apply px-6 py-3 text-center border border-gray-300;
 }
 
 .table-td {
-  @apply px-6 py-4 text-center;
+    @apply px-6 py-4 text-center border border-gray-300;
 }
 
 .table-row {
-  @apply bg-white border-b hover:bg-gray-100;
+    @apply bg-white hover:bg-gray-100;
+}
+
+.table {
+    @apply w-full text-sm text-left text-gray-500 border-collapse;
 }
 
 .table-last-row {
-  @apply bg-white hover:bg-gray-100;
+    @apply bg-white hover:bg-gray-100;
 }
 
 .table-link {
-  @apply font-medium text-blue-600;
+    @apply font-medium text-blue-600;
 }
 
 .table-link:hover {
-  @apply text-blue-700;
+    @apply text-blue-700;
+}
+
+.button-container {
+    @apply flex items-center justify-center gap-x-3.5;
 }
