@@ -22,7 +22,19 @@ export default function EntryDocuments() {
     queryFn: () => entryDocumentService.getAll(),
   });
   const selectOptions = ['valoare1', 'valoare2', 'valoare3'];
-  const columns = ['ID', 'Număr', 'Data', 'Executor', 'Destinatar', 'Expeditor'];
+  // const columns = [
+  //   'ID',
+  //   'Număr',
+  //   'Data',
+  //   'Executor',
+  //   'Coordonator',
+  //   'Destinatar',
+  //   'Expeditor',
+  //   'Statut',
+  //   // 'Data de intrare',
+  //   // 'Număr de intrare',
+  //   'Termen',
+  // ];
 
   if (loading || isLoading) {
     return <Loader />;
@@ -42,16 +54,49 @@ export default function EntryDocuments() {
         <p>Nu există documente disponibile.</p>
       </div>
     );
+  } else {
+    console.log(data?.data);
   }
+
+  // const tableData = data.data.data.map((doc: any) => ({
+  //   id: doc.id,
+  //   number: doc.number,
+  //   date: doc.date,
+  //   executor: doc.executors.map((e: any) => `${e.name} ${e.surname}`).join(', '),
+  //   coordinators: doc.coordinators.map((e: any) => `${e.name} ${e.surname}`).join(', '),
+  //   received: doc.received.name,
+  //   sender: doc.sender.name,
+  //   status: doc.status,
+  //   // entry_date: doc.entry_date,
+  //   // entry_number: doc.entry_number,
+  //   execution_date: doc.execution_date,
+  // }));
+
+  const columns = [
+    { label: 'ID', key: 'id' },
+    { label: 'Număr', key: 'number' },
+    { label: 'Data', key: 'date' },
+    { label: 'Executori', key: 'executor' },
+    { label: 'Coordonatori', key: 'coordinator' },
+    { label: 'Primit de', key: 'received' },
+    { label: 'Expeditor', key: 'sender' },
+    { label: 'Status', key: 'status' },
+    { label: 'Termen', key: 'execution_time' },
+  ];
 
   const tableData = data.data.data.map((doc: any) => ({
     id: doc.id,
     number: doc.number,
     date: doc.date,
     executor: doc.executors.map((e: any) => `${e.name} ${e.surname}`).join(', '),
+    coordinator: doc.coordinators.map((e: any) => `${e.name} ${e.surname}`).join(', '),
     received: doc.received.name,
     sender: doc.sender.name,
+    status: doc.status,
+    execution_time: doc.execution_time,
   }));
+
+  <Table columns={columns} data={tableData} />;
 
   return (
     <section>

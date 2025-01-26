@@ -7,8 +7,8 @@ import { FaRegEdit } from 'react-icons/fa';
 import { HiOutlineDocumentRemove } from 'react-icons/hi';
 
 interface TableProps {
-  columns: string[];
-  data: any;
+  columns: { label: string; key: string }[];
+  data: any[];
 }
 
 export default function Table({ columns, data }: TableProps) {
@@ -16,12 +16,10 @@ export default function Table({ columns, data }: TableProps) {
   const allowEditAccess: boolean =
     role === UserRole.SECRETARY || role === UserRole.DIRECTOR;
 
-  console.log(data[0]);
-
-  if (!Array.isArray(data)) {
+  if (!Array.isArray(data) || data.length === 0) {
     return (
       <div className="error-message">
-        <p>Datele nu sunt disponibile sau au un format incorect.</p>
+        <p>Nu există date disponibile sau formatul este incorect.</p>
       </div>
     );
   }
@@ -31,9 +29,9 @@ export default function Table({ columns, data }: TableProps) {
       <table className="table">
         <thead className="table-head">
           <tr>
-            {columns.map((col: string, index: number) => (
+            {columns.map((col, index) => (
               <th key={index} scope="col" className="table-th">
-                {col}
+                {col.label}
               </th>
             ))}
             {allowEditAccess && (
@@ -44,16 +42,15 @@ export default function Table({ columns, data }: TableProps) {
           </tr>
         </thead>
         <tbody>
-          {data.map((row: any, rowIndex: number) => (
+          {data.map((row, rowIndex) => (
             <tr key={rowIndex} className="table-row">
-              {/*<td className="table-td">{data[row]}</td>*/}
-              {columns.map((col: string, colIndex: number) => (
+              {columns.map((col, colIndex) => (
                 <td key={colIndex} className="table-td">
-                  {<p>dsasd</p>}
+                  {row[col.key] || '-'}
                 </td>
               ))}
               {allowEditAccess && (
-                <td className="table-td md:space-x-5 md:flex justify-center">
+                <td className="table-td md:space-x-5 md:flex justify-center items-center">
                   <button className={'flex text-primary'}>
                     Modifică <FaRegEdit className={'ml-2'} size={17} />
                   </button>

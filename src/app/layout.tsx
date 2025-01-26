@@ -27,9 +27,11 @@ export default function RootLayout({
     <html lang="ro">
       <body className={inter.className} suppressHydrationWarning={true}>
         <Providers>
-          <Sidebar />
           <main className="main-content">
-            {children}
+            <div className="min-h-screen fixed top-0 z-10">
+              <Sidebar />
+            </div>
+            <div className="page-content">{children}</div>
             <Toaster
               toastOptions={{
                 classNames: {
