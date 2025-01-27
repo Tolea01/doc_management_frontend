@@ -111,18 +111,6 @@ export default function EntryDocuments() {
             control={control}
             name="option1"
           />
-          {/*<SelectInputField*/}
-          {/*  options={selectOptions}*/}
-          {/*  className="w-full lg:w-1/4"*/}
-          {/*  control={control}*/}
-          {/*  name="option2"*/}
-          {/*/>*/}
-          {/*<SelectInputField*/}
-          {/*  options={selectOptions}*/}
-          {/*  className="w-full lg:w-1/4"*/}
-          {/*  control={control}*/}
-          {/*  name="option3"*/}
-          {/*/>*/}
           <DatePickerField className="w-full lg:w-1/4" control={control} name="date1" />
           <DatePickerField className="w-full lg:w-1/4" control={control} name="date2" />
         </div>

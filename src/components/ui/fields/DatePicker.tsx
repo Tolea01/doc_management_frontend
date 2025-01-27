@@ -26,13 +26,13 @@ export default function DatePickerField({
       control={control}
       rules={rules}
       render={({ field, fieldState: { error } }) => (
-        <div className={`datepicker-wrapper ${className}`}>
+        <div className={`${className} relative`}>
           <DatePicker
             {...field}
             selected={field.value}
             onChange={(date) => field.onChange(date)}
             placeholderText={placeholder}
-            className="p-2 border border-gray-200 rounded text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+            className={`input-field`}
             locale={ro}
           />
         </div>

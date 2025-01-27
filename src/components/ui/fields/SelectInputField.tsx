@@ -25,13 +25,14 @@ export default function SelectInputField({
       control={control}
       rules={rules}
       render={({ field, fieldState: { error } }) => (
-        <div className={`select-input ${className}`}>
+        <div className={`relative ${className}`}>
           <Select
             {...field}
             options={options}
             placeholder={placeholder}
             onChange={(selectedOption) => field.onChange(selectedOption)}
             value={options.find((option) => option.value === field.value)}
+            classNamePrefix="custom-select"
           />
         </div>
       )}
