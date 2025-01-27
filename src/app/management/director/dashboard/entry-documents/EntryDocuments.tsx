@@ -16,6 +16,8 @@ import Pagination from '@components/pagination/Pagination';
 import { toast } from 'sonner';
 import Badge from '@components/badges/Badge';
 import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
+import EntryDocumentForm from '@management/director/dashboard/entry-documents/EntryDocumentForm';
+import DatePickerField from '@components/fields/DatePicker';
 
 export default function EntryDocuments() {
   const { control, handleSubmit } = useForm({ mode: 'onChange' });
@@ -29,7 +31,11 @@ export default function EntryDocuments() {
   });
   const totalItems: any = data?.data?.total || 0;
   const totalPages: number = Math.ceil(totalItems / itemsPerPage);
-  const selectOptions: string[] = ['valoare1', 'valoare2', 'valoare3'];
+  const selectOptions = [
+    { value: 'option1', label: 'Opțiunea 1' },
+    { value: 'option2', label: 'Opțiunea 2' },
+    { value: 'option3', label: 'Opțiunea 3' },
+  ];
 
   if (loading || isLoading) {
     return <Loader />;
@@ -101,19 +107,24 @@ export default function EntryDocuments() {
           />
           <SelectInputField
             options={selectOptions}
-            selectedValue="alege opțiunea"
             className="w-full lg:w-1/4"
+            control={control}
+            name="option1"
           />
-          <SelectInputField
-            options={selectOptions}
-            selectedValue="alege opțiunea"
-            className="w-full lg:w-1/4"
-          />
-          <SelectInputField
-            options={selectOptions}
-            selectedValue="alege opțiunea"
-            className="w-full lg:w-1/4"
-          />
+          {/*<SelectInputField*/}
+          {/*  options={selectOptions}*/}
+          {/*  className="w-full lg:w-1/4"*/}
+          {/*  control={control}*/}
+          {/*  name="option2"*/}
+          {/*/>*/}
+          {/*<SelectInputField*/}
+          {/*  options={selectOptions}*/}
+          {/*  className="w-full lg:w-1/4"*/}
+          {/*  control={control}*/}
+          {/*  name="option3"*/}
+          {/*/>*/}
+          <DatePickerField className="w-full lg:w-1/4" control={control} name="date1" />
+          <DatePickerField className="w-full lg:w-1/4" control={control} name="date2" />
         </div>
       </form>
       <article>
@@ -128,7 +139,7 @@ export default function EntryDocuments() {
       </article>
       <Modal
         modalHeader={'Adauga document'}
-        modalBody={<p>adauga document</p>}
+        modalBody={<EntryDocumentForm />}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={() => setIsModalOpen(false)}

@@ -1,22 +1,40 @@
+import Select from 'react-select';
+import { Controller } from 'react-hook-form';
 import './styles.css';
 
 interface SelectInputFieldProps {
   className?: string;
-  selectedValue: string;
-  options: string[];
+  control: any;
+  name: string;
+  options: { value: string; label: string }[];
+  placeholder?: string;
+  rules?: object;
 }
 
 export default function SelectInputField({
-  className,
-  selectedValue,
+  className = '',
+  control,
+  name,
   options,
+  placeholder = 'Selectează',
+  rules = {},
 }: SelectInputFieldProps) {
   return (
-    <select className={`select-input ${className}`}>
-      <option selected>{selectedValue}</option>
-      {options.map((option, index) => (
-        <option key={index}>{option}</option>
-      ))}
-    </select>
+    <Controller
+      name={name}
+      control={control}
+      rules={rules}
+      render={({ field, fieldState: { error } }) => (
+        <div className={`select-input ${className}`}>
+          <Select
+            {...field}
+            options={options}
+            placeholder={placeholder}
+            onChange={(selectedOption) => field.onChange(selectedOption)}
+            value={options.find((option) => option.value === field.value)}
+          />
+        </div>
+      )}
+    />
   );
 }
