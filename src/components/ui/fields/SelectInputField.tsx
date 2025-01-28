@@ -4,7 +4,7 @@ import './styles.css';
 
 interface SelectInputFieldProps {
   className?: string;
-  control: any;
+  control?: any;
   name: string;
   options: { value: string; label: string }[];
   placeholder?: string;
@@ -30,7 +30,7 @@ export default function SelectInputField({
       rules={rules}
       render={({ field, fieldState: { error } }) => (
         <fieldset className={`relative ${className}`}>
-          <label htmlFor={id} className="input-label">
+          <label htmlFor={id} className="input-label z-50">
             {label}
           </label>
           <Select

@@ -13,11 +13,11 @@ import Loader from '@components/loaders/Loader';
 import { useQuery } from '@tanstack/react-query';
 import { entryDocumentService } from '@services/entry-document/entry-document.service';
 import Pagination from '@components/pagination/Pagination';
-import { toast } from 'sonner';
 import Badge from '@components/badges/Badge';
 import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
 import EntryDocumentForm from '@management/director/dashboard/entry-documents/EntryDocumentForm';
 import DatePickerField from '@components/fields/DatePicker';
+import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
 
 export default function EntryDocuments() {
   const { control, handleSubmit } = useForm({ mode: 'onChange' });
@@ -31,22 +31,10 @@ export default function EntryDocuments() {
   });
   const totalItems: any = data?.data?.total || 0;
   const totalPages: number = Math.ceil(totalItems / itemsPerPage);
-  const selectOptions = [
-    { value: 'option1', label: 'Opțiunea 1' },
-    { value: 'option2', label: 'Opțiunea 2' },
-    { value: 'option3', label: 'Opțiunea 3' },
-  ];
+  const selectOptions = getDocumentStatusOptions();
 
   if (loading || isLoading) {
     return <Loader />;
-  }
-
-  if (error) {
-    toast.error('Nu s-a putut încărca documentele. Încercați din nou mai târziu.');
-  }
-
-  if (!data?.data) {
-    toast.error('Nu există documente disponibile.');
   }
 
   const columns = [
@@ -91,7 +79,7 @@ export default function EntryDocuments() {
           <InputField
             name="documentSearchValue"
             label="Caută document"
-            control={control}
+            // control={control}
             id="entry-document-search"
             type="search"
             className="w-full lg:w-[250px]"
@@ -109,22 +97,22 @@ export default function EntryDocuments() {
           <SelectInputField
             options={selectOptions}
             className="w-full lg:w-1/4"
-            control={control}
-            name="option1"
+            // control={control}
+            name="entry_document_status"
             id="entry-document-status-select"
             placeholder={'Caută după statut'}
           />
           <DatePickerField
             className="w-full lg:w-1/4"
-            control={control}
-            name="date1"
+            // control={control}
+            name="entry_document_date"
             id="entry-document-date-select"
             placeholder={'Caută după dată'}
           />
           <DatePickerField
             className="w-full lg:w-1/4"
-            control={control}
-            name="date2"
+            // control={control}
+            name="entry_document_entry_date"
             id="entry-document-entrydate-select"
             placeholder={'Caută după data intrării'}
           />

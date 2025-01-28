@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './styles.css';
 
 interface DatePickerFieldProps {
-  control: any;
+  control?: any;
   name: string;
   placeholder?: string;
   rules?: object;
@@ -31,7 +31,7 @@ export default function DatePickerField({
       rules={rules}
       render={({ field, fieldState: { error } }) => (
         <fieldset className={`${className} relative`}>
-          <label htmlFor={id} className="input-label">
+          <label htmlFor={id} className="input-label z-50">
             {label}
           </label>
           <DatePicker
@@ -42,6 +42,8 @@ export default function DatePickerField({
             className={`input-field`}
             id={id}
             locale={ro}
+            dateFormat={'yyyy-MM-dd'}
+            minDate={new Date('2025-01-01')}
           />
         </fieldset>
       )}
