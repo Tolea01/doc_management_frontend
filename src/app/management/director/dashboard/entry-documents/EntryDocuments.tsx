@@ -20,18 +20,32 @@ import DatePickerField from '@components/fields/DatePicker';
 import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
 
 export default function EntryDocuments() {
-  const { control, handleSubmit } = useForm({ mode: 'onChange' });
+  const { control, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      number: '',
+      status: '',
+      date: '',
+      entryDate: '',
+    },
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const { loading } = useAuth();
+  const [filters, setFilters] = useState({});
   const { data, error, isLoading } = useQuery({
-    queryKey: ['entryDocuments', currentPage],
-    queryFn: () => entryDocumentService.getAll(currentPage, itemsPerPage),
+    queryKey: ['entryDocuments', currentPage, filters],
+    queryFn: () => entryDocumentService.getAll(currentPage, itemsPerPage, filters),
   });
   const totalItems: any = data?.data?.total || 0;
   const totalPages: number = Math.ceil(totalItems / itemsPerPage);
   const selectOptions = getDocumentStatusOptions();
+
+  const onSubmit = (data: any) => {
+    console.log(data.date);
+    setFilters(data);
+  };
 
   if (loading || isLoading) {
     return <Loader />;
@@ -74,10 +88,10 @@ export default function EntryDocuments() {
       <header className="page-header">
         <h1 className="page-title">Documente de intrare</h1>
       </header>
-      <form className="search-document-form">
+      <form className="search-document-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4 lg:mb-0">
           <InputField
-            name="documentSearchValue"
+            name="number"
             label="Caută document"
             control={control}
             id="entry-document-search"
@@ -98,24 +112,25 @@ export default function EntryDocuments() {
             options={selectOptions}
             className="w-full lg:w-1/4"
             control={control}
-            name="entry_document_status"
+            name="status"
             id="entry-document-status-select"
             placeholder={'Caută după statut'}
           />
           <DatePickerField
             className="w-full lg:w-1/4"
             control={control}
-            name="entry_document_date"
+            name="date"
             id="entry-document-date-select"
             placeholder={'Caută după dată'}
           />
           <DatePickerField
             className="w-full lg:w-1/4"
             control={control}
-            name="entry_document_entry_date"
+            name="entryDate"
             id="entry-document-entrydate-select"
             placeholder={'Caută după data intrării'}
           />
+          <Button type="submit" size="small" variant="primary" value="Caută" />
         </div>
       </form>
       <article>
