@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './styles.css';
 
 interface DatePickerFieldProps {
-  control?: any;
+  control: any;
   name: string;
   placeholder?: string;
   rules?: object;

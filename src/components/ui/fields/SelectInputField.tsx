@@ -4,7 +4,7 @@ import './styles.css';
 
 interface SelectInputFieldProps {
   className?: string;
-  control?: any;
+  control: any;
   name: string;
   options: { value: string; label: string }[];
   placeholder?: string;

@@ -5,7 +5,7 @@ import './styles.css';
 
 interface FieldsProps<T extends FieldValues> {
   name: keyof T;
-  control?: Control<T>;
+  control: Control<T>;
   defaultValue?: string;
   label: string;
   type: string;
