@@ -9,6 +9,8 @@ interface SelectInputFieldProps {
   options: { value: string; label: string }[];
   placeholder?: string;
   rules?: object;
+  label?: string;
+  id: string;
 }
 
 export default function SelectInputField({
@@ -16,18 +18,24 @@ export default function SelectInputField({
   control,
   name,
   options,
-  placeholder = 'Selectează',
+  placeholder,
   rules = {},
-}: SelectInputFieldProps) {
+  label,
+  id,
+}: SelectInputFieldProps & { label: string; id: string }) {
   return (
     <Controller
       name={name}
       control={control}
       rules={rules}
       render={({ field, fieldState: { error } }) => (
-        <div className={`relative ${className}`}>
+        <fieldset className={`relative ${className}`}>
+          <label htmlFor={id} className="input-label">
+            {label}
+          </label>
           <Select
             {...field}
+            inputId={id}
             options={options}
             placeholder={placeholder}
             onChange={(selectedOption) => field.onChange(selectedOption)}
@@ -71,7 +79,7 @@ export default function SelectInputField({
               }),
             }}
           />
-        </div>
+        </fieldset>
       )}
     />
   );

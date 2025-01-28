@@ -11,31 +11,39 @@ interface DatePickerFieldProps {
   placeholder?: string;
   rules?: object;
   className?: string;
+  label?: string;
+  id: string;
 }
 
 export default function DatePickerField({
   control,
   name,
-  placeholder = 'Selectează o dată',
+  placeholder,
   rules = {},
   className = '',
-}: DatePickerFieldProps) {
+  label,
+  id,
+}: DatePickerFieldProps & { label: string; id: string }) {
   return (
     <Controller
       name={name}
       control={control}
       rules={rules}
       render={({ field, fieldState: { error } }) => (
-        <div className={`${className} relative`}>
+        <fieldset className={`${className} relative`}>
+          <label htmlFor={id} className="input-label">
+            {label}
+          </label>
           <DatePicker
             {...field}
             selected={field.value}
             onChange={(date) => field.onChange(date)}
             placeholderText={placeholder}
             className={`input-field`}
+            id={id}
             locale={ro}
           />
-        </div>
+        </fieldset>
       )}
     />
   );

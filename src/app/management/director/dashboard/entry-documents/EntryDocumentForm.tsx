@@ -76,13 +76,25 @@ export default function EntryDocumentForm() {
           id="entry-document-number"
           size="medium"
         />
-        <DatePickerField className="w-full" control={control} name="date1" />
-        <DatePickerField className="w-full" control={control} name="date2" />
+        <DatePickerField
+          className="w-full"
+          control={control}
+          name="date1"
+          label={'Selecteaza o data'}
+        />
+        <DatePickerField
+          className="w-full"
+          control={control}
+          name="date2"
+          label={'Selecteaza o data'}
+        />
         <SelectInputField
           options={selectOptions}
           className="w-full"
           control={control}
           name="option1"
+          label={'Selecteaza'}
+          id="entry-document-number"
         />
         <SelectInputField
           options={selectOptions}

@@ -95,7 +95,8 @@ export default function EntryDocuments() {
             id="entry-document-search"
             type="search"
             className="w-full lg:w-[250px]"
-            size="small"
+            size="medium"
+            placeholder={'Introdu numărul documentului'}
           />
         </div>
         <div className="search-document-selector">
@@ -110,9 +111,23 @@ export default function EntryDocuments() {
             className="w-full lg:w-1/4"
             control={control}
             name="option1"
+            id="entry-document-status-select"
+            placeholder={'Caută după statut'}
           />
-          <DatePickerField className="w-full lg:w-1/4" control={control} name="date1" />
-          <DatePickerField className="w-full lg:w-1/4" control={control} name="date2" />
+          <DatePickerField
+            className="w-full lg:w-1/4"
+            control={control}
+            name="date1"
+            id="entry-document-date-select"
+            placeholder={'Caută după dată'}
+          />
+          <DatePickerField
+            className="w-full lg:w-1/4"
+            control={control}
+            name="date2"
+            id="entry-document-entrydate-select"
+            placeholder={'Caută după data intrării'}
+          />
         </div>
       </form>
       <article>
