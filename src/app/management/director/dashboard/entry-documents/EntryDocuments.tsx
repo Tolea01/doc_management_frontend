@@ -1,45 +1,33 @@
 'use client';
 
-import Button from '@components/buttons/Button';
+import { useForm } from 'react-hook-form';
+import { useState, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { entryDocumentService } from '@services/entry-document/entry-document.service';
 import InputField from '@components/fields/InputField';
 import SelectInputField from '@components/fields/SelectInputField';
 import Table from '@components/tables/Table';
-import { useForm } from 'react-hook-form';
-import './style.css';
-import { useState } from 'react';
-import Modal from '@components/modal/Modal';
-import { useAuth } from '../../../../../hooks/useAuth';
-import Loader from '@components/loaders/Loader';
-import { useQuery } from '@tanstack/react-query';
-import { entryDocumentService } from '@services/entry-document/entry-document.service';
 import Pagination from '@components/pagination/Pagination';
 import Badge from '@components/badges/Badge';
 import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
-import EntryDocumentForm from '@management/director/dashboard/entry-documents/EntryDocumentForm';
-import DatePickerField from '@components/fields/DatePicker';
 import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
 import { format } from 'date-fns';
+import EntryDocumentForm from '@management/director/dashboard/entry-documents/EntryDocumentForm';
+import Modal from '@components/modal/Modal';
+import Button from '@components/buttons/Button';
+import DatePickerField from '@components/fields/DatePicker';
 
 export default function EntryDocuments() {
-  const { control, handleSubmit, reset } = useForm({
-    mode: 'onChange',
-  });
+  const { control, watch } = useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-  const { loading } = useAuth();
-  const [filters, setFilters] = useState({});
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['entryDocuments', currentPage, filters],
-    queryFn: () => entryDocumentService.getAll(currentPage, itemsPerPage, filters),
-  });
-  const totalItems: any = data?.data?.total || 0;
-  const totalPages: number = Math.ceil(totalItems / itemsPerPage);
   const selectOptions = getDocumentStatusOptions();
+  const searchFilters = watch();
 
-  const onSubmit = (data: any) => {
-    const formattedData = Object.fromEntries(
-      Object.entries(data)
+  const filters = useMemo(() => {
+    return Object.fromEntries(
+      Object.entries(searchFilters || {})
         .filter(([_, value]) => value !== null && value !== '' && value !== undefined)
         .map(([key, value]) => {
           if (value instanceof Date) {
@@ -48,13 +36,15 @@ export default function EntryDocuments() {
           return [key, value];
         }),
     );
+  }, [searchFilters]);
 
-    setFilters(formattedData);
-  };
+  const { data, isLoading } = useQuery({
+    queryKey: ['entryDocuments', currentPage, filters],
+    queryFn: () => entryDocumentService.getAll(currentPage, itemsPerPage, filters),
+  });
 
-  if (loading || isLoading) {
-    return <Loader />;
-  }
+  const totalItems: any = data?.data?.total || 0;
+  const totalPages: number = Math.ceil(totalItems / itemsPerPage);
 
   const columns = [
     { label: 'ID', key: 'id' },
@@ -93,7 +83,7 @@ export default function EntryDocuments() {
       <header className="page-header">
         <h1 className="page-title">Documente de intrare</h1>
       </header>
-      <form className="search-document-form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="search-document-form">
         <div className="mb-4 lg:mb-0">
           <InputField
             name="number"
@@ -135,7 +125,6 @@ export default function EntryDocuments() {
             id="entry-document-execution-time-select"
             placeholder={'Caută după termen'}
           />
-          <Button type="submit" size="small" variant="primary" value="Caută" />
         </div>
       </form>
       <article>
