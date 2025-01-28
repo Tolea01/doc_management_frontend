@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Control, Controller, FieldValues } from 'react-hook-form';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
+import React from 'react';
 import './styles.css';
 
 interface FieldsProps<T extends FieldValues> {
@@ -15,6 +16,7 @@ interface FieldsProps<T extends FieldValues> {
   inputProps?: React.InputHTMLAttributes<HTMLElement>;
   disabled?: boolean;
   size: 'small' | 'medium' | 'large' | 'extra-large';
+  rules?: object;
 }
 
 export default function InputField<T extends FieldValues>({
@@ -29,6 +31,7 @@ export default function InputField<T extends FieldValues>({
   inputProps,
   disabled,
   size,
+  rules = {},
 }: FieldsProps<T>): JSX.Element {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -39,7 +42,7 @@ export default function InputField<T extends FieldValues>({
       control={control as Control}
       name={name as string}
       defaultValue={defaultValue}
-      rules={{ required: true }}
+      rules={rules}
       render={({ field: { onChange, onBlur, value, ref } }) => (
         <fieldset className={`input-fieldset ${className}`}>
           <label className="input-label" htmlFor={id}>

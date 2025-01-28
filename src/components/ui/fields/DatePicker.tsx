@@ -42,7 +42,7 @@ export default function DatePickerField({
             className={`input-field`}
             id={id}
             locale={ro}
-            dateFormat={'yyyy-MM-dd'}
+            dateFormat="yyyy-MM-dd"
             minDate={new Date('2025-01-01')}
           />
         </fieldset>

@@ -18,16 +18,11 @@ import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVarian
 import EntryDocumentForm from '@management/director/dashboard/entry-documents/EntryDocumentForm';
 import DatePickerField from '@components/fields/DatePicker';
 import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
+import { format } from 'date-fns';
 
 export default function EntryDocuments() {
   const { control, handleSubmit, reset } = useForm({
     mode: 'onChange',
-    defaultValues: {
-      number: '',
-      status: '',
-      date: '',
-      entryDate: '',
-    },
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,8 +38,18 @@ export default function EntryDocuments() {
   const selectOptions = getDocumentStatusOptions();
 
   const onSubmit = (data: any) => {
-    console.log(data.date);
-    setFilters(data);
+    const formattedData = Object.fromEntries(
+      Object.entries(data)
+        .filter(([_, value]) => value !== null && value !== '' && value !== undefined)
+        .map(([key, value]) => {
+          if (value instanceof Date) {
+            return [key, format(value, 'yyyy-MM-dd')];
+          }
+          return [key, value];
+        }),
+    );
+
+    setFilters(formattedData);
   };
 
   if (loading || isLoading) {
@@ -126,9 +131,9 @@ export default function EntryDocuments() {
           <DatePickerField
             className="w-full lg:w-1/4"
             control={control}
-            name="entryDate"
-            id="entry-document-entrydate-select"
-            placeholder={'Caută după data intrării'}
+            name="execution_time"
+            id="entry-document-execution-time-select"
+            placeholder={'Caută după termen'}
           />
           <Button type="submit" size="small" variant="primary" value="Caută" />
         </div>
