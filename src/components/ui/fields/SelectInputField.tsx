@@ -33,6 +33,43 @@ export default function SelectInputField({
             onChange={(selectedOption) => field.onChange(selectedOption)}
             value={options.find((option) => option.value === field.value)}
             classNamePrefix="custom-select"
+            styles={{
+              control: (base) => ({
+                ...base,
+                borderRadius: '0.375rem',
+                borderWidth: '2px',
+                borderColor: 'rgb(203, 213, 225)',
+                boxShadow: 'none',
+                '&:hover': {
+                  borderColor: 'rgb(148, 163, 184)',
+                },
+                '&:focus-within': {
+                  borderColor: 'rgb(59, 130, 246)',
+                },
+              }),
+              placeholder: (base) => ({
+                ...base,
+                color: 'rgb(156, 163, 175)',
+              }),
+              singleValue: (base) => ({
+                ...base,
+                color: 'rgb(30, 41, 59)',
+              }),
+              menu: (base) => ({
+                ...base,
+                boxShadow: '0 1px 2px rgb(0 0 0 / 0.05)',
+              }),
+              option: (base, { isFocused, isSelected }) => ({
+                ...base,
+                backgroundColor: isSelected
+                  ? 'rgb(59, 130, 246)'
+                  : isFocused
+                    ? 'rgb(229, 231, 235)'
+                    : 'transparent',
+                color: isSelected ? 'white' : 'rgb(30, 41, 59)',
+                cursor: 'pointer',
+              }),
+            }}
           />
         </div>
       )}
