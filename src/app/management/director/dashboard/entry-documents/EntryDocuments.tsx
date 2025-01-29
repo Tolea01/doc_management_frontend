@@ -25,18 +25,21 @@ export default function EntryDocuments() {
   const selectOptions = getDocumentStatusOptions();
   const searchFilters = watch();
 
-  const filters = useMemo(() => {
-    return Object.fromEntries(
-      Object.entries(searchFilters || {})
-        .filter(([_, value]) => value !== null && value !== '' && value !== undefined)
-        .map(([key, value]) => {
-          if (value instanceof Date) {
-            return [key, format(value, 'yyyy-MM-dd')];
-          }
-          return [key, value];
-        }),
-    );
-  }, [searchFilters]);
+const filters = useMemo(() => {
+  return Object.fromEntries(
+    Object.entries(searchFilters || {})
+      .filter(([_, value]) => value !== null && value !== '' && value !== undefined)
+      .map(([key, value]) => {
+        if (key === 'status' && value?.label) {
+          return [key, value.label];
+        }
+        if (value instanceof Date) {
+          return [key, format(value, 'yyyy-MM-dd')];
+        }
+        return [key, value];
+      }),
+  );
+}, [searchFilters]);
 
   const { data, isLoading } = useQuery({
     queryKey: ['entryDocuments', currentPage, filters],
