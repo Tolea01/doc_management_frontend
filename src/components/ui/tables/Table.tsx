@@ -1,10 +1,10 @@
 'use client';
 
-import './style.css';
-import { useAuth } from '../../../hooks/useAuth';
 import { UserRole } from '@enums/user-role.enum';
 import { FaRegEdit } from 'react-icons/fa';
 import { HiOutlineDocumentRemove } from 'react-icons/hi';
+import { useAuth } from '../../../hooks/useAuth';
+import './style.css';
 
 interface TableProps {
   columns: { label: string; key: string }[];
@@ -19,11 +19,7 @@ export default function Table({ columns, data, onDelete, onModify }: TableProps)
     role === UserRole.SECRETARY || role === UserRole.DIRECTOR;
 
   if (!Array.isArray(data) || data.length === 0) {
-    return (
-      <div className="error-message">
-        <p>Nu există date disponibile sau formatul este incorect.</p>
-      </div>
-    );
+    return null;
   }
 
   return (

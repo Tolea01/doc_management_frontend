@@ -1,21 +1,21 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { useState, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { entryDocumentService } from '@services/entry-document/entry-document.service';
-import InputField from '@components/fields/InputField';
-import SelectInputField from '@components/fields/SelectInputField';
-import Table from '@components/tables/Table';
-import Pagination from '@components/pagination/Pagination';
 import Badge from '@components/badges/Badge';
-import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
-import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
-import { format } from 'date-fns';
-import EntryDocumentForm from '@management/director/dashboard/entry-documents/EntryDocumentForm';
-import Modal from '@components/modal/Modal';
 import Button from '@components/buttons/Button';
 import DatePickerField from '@components/fields/DatePicker';
+import InputField from '@components/fields/InputField';
+import SelectInputField from '@components/fields/SelectInputField';
+import Modal from '@components/modal/Modal';
+import Pagination from '@components/pagination/Pagination';
+import Table from '@components/tables/Table';
+import EntryDocumentForm from '@management/director/dashboard/entry-documents/EntryDocumentForm';
+import { entryDocumentService } from '@services/entry-document/entry-document.service';
+import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
+import { useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
+import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
 
 export default function EntryDocuments() {
   const { control, watch } = useForm();
@@ -25,21 +25,21 @@ export default function EntryDocuments() {
   const selectOptions = getDocumentStatusOptions();
   const searchFilters = watch();
 
-const filters = useMemo(() => {
-  return Object.fromEntries(
-    Object.entries(searchFilters || {})
-      .filter(([_, value]) => value !== null && value !== '' && value !== undefined)
-      .map(([key, value]) => {
-        if (key === 'status' && value?.label) {
-          return [key, value.label];
-        }
-        if (value instanceof Date) {
-          return [key, format(value, 'yyyy-MM-dd')];
-        }
-        return [key, value];
-      }),
-  );
-}, [searchFilters]);
+  const filters = useMemo(() => {
+    return Object.fromEntries(
+      Object.entries(searchFilters || {})
+        .filter(([_, value]) => value !== null && value !== '' && value !== undefined)
+        .map(([key, value]) => {
+          if (key === 'status' && value?.label) {
+            return [key, value.label];
+          }
+          if (value instanceof Date) {
+            return [key, format(value, 'yyyy-MM-dd')];
+          }
+          return [key, value];
+        }),
+    );
+  }, [searchFilters]);
 
   const { data, isLoading } = useQuery({
     queryKey: ['entryDocuments', currentPage, filters],
@@ -133,11 +133,13 @@ const filters = useMemo(() => {
       <article>
         <Table columns={columns} data={tableData} />
         <div className="pt-5 pb-5">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
+          {Array.isArray(tableData) && tableData.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          )}
         </div>
       </article>
       <Modal
