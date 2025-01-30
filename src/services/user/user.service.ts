@@ -5,7 +5,7 @@ import { IUserListResponse, IUserUpdate } from '../../types/user.type';
 class UserService {
   private BASE_URL = '/user';
 
-  async getAll(): Promise<AxiosResponse<IUserListResponse, any>> {
+  async getAll(): Promise<AxiosResponse<any, any>> {
     const response: AxiosResponse<IUserListResponse, any> =
       await axiosWithAuth.get<IUserListResponse>(`${this.BASE_URL}/list`);
 

@@ -50,3 +50,7 @@
 .custom-select__control {
     @apply input-field;
 }
+
+.datepicker-popper {
+    @apply z-20
+}

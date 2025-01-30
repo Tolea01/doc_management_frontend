@@ -1,5 +1,6 @@
 import Select from 'react-select';
 import { Controller } from 'react-hook-form';
+import makeAnimated from 'react-select/animated';
 import './styles.css';
 
 interface SelectInputFieldProps {
@@ -12,6 +13,8 @@ interface SelectInputFieldProps {
   label?: string;
   id: string;
 }
+
+const animatedComponents = makeAnimated();
 
 export default function SelectInputField({
   className = '',
@@ -30,7 +33,7 @@ export default function SelectInputField({
       rules={rules}
       render={({ field, fieldState: { error } }) => (
         <fieldset className={`relative ${className}`}>
-          <label htmlFor={id} className="input-label z-50">
+          <label htmlFor={id} className="input-label z-10">
             {label}
           </label>
           <Select
@@ -40,6 +43,9 @@ export default function SelectInputField({
             placeholder={placeholder}
             onChange={(selectedOption) => field.onChange(selectedOption)}
             value={options.find((option) => option.value === field.value)}
+            components={animatedComponents}
+            closeMenuOnSelect={false}
+            isMulti
             classNamePrefix="custom-select"
             styles={{
               control: (base) => ({
@@ -66,6 +72,7 @@ export default function SelectInputField({
               menu: (base) => ({
                 ...base,
                 boxShadow: '0 1px 2px rgb(0 0 0 / 0.05)',
+                zIndex: 20,
               }),
               option: (base, { isFocused, isSelected }) => ({
                 ...base,

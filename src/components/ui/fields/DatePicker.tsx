@@ -31,7 +31,7 @@ export default function DatePickerField({
       rules={rules}
       render={({ field, fieldState: { error } }) => (
         <fieldset className={`${className} relative`}>
-          <label htmlFor={id} className="input-label z-50">
+          <label htmlFor={id} className="input-label z-10">
             {label}
           </label>
           <DatePicker
@@ -39,7 +39,8 @@ export default function DatePickerField({
             selected={field.value}
             onChange={(date) => field.onChange(date)}
             placeholderText={placeholder}
-            className={`input-field`}
+            className="input-field"
+            popperClassName="datepicker-popper"
             id={id}
             locale={ro}
             dateFormat="yyyy-MM-dd"

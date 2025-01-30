@@ -16,6 +16,8 @@ import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
 import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import { useRouter } from 'next/navigation'
 
 export default function EntryDocuments() {
   const { control, watch } = useForm();
@@ -24,6 +26,7 @@ export default function EntryDocuments() {
   const [itemsPerPage] = useState(10);
   const selectOptions = getDocumentStatusOptions();
   const searchFilters = watch();
+  const router: AppRouterInstance = useRouter();
 
   const filters = useMemo(() => {
     return Object.fromEntries(
@@ -104,7 +107,7 @@ export default function EntryDocuments() {
             size="small"
             variant="primary"
             value="adaugă"
-            onClick={() => setIsModalOpen(!isModalOpen)}
+            onClick={() => router.push('entry-documents/create')}
           />
           <SelectInputField
             options={selectOptions}
@@ -142,13 +145,6 @@ export default function EntryDocuments() {
           )}
         </div>
       </article>
-      <Modal
-        modalHeader={'Adauga document'}
-        modalBody={<EntryDocumentForm />}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={() => setIsModalOpen(false)}
-      />
     </section>
   );
 }
