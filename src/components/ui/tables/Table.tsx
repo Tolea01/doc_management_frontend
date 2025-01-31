@@ -50,11 +50,11 @@ export default function Table({ columns, data, onDelete, onModify }: TableProps)
               {allowEditAccess && (
                 <td className="table-td">
                   <div className="button-container">
-                    <button className="flex gap-x-2 text-primary" onClick={onModify}>
+                    <button className=" flex gap-x-2 text-primary hover:bg-blue-700" onClick={onModify}>
                       Modifică <FaRegEdit size={17} />
                     </button>
                     <button
-                      className="flex gap-x-2 text-red-500 mt-2 md:mt-0"
+                      className="flex gap-x-2 text-red-500 mt-2 hover:"
                       onClick={onDelete}
                     >
                       Șterge <HiOutlineDocumentRemove size={17} />

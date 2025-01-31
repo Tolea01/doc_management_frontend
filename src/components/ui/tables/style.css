@@ -35,5 +35,5 @@
 }
 
 .button-container {
-    @apply flex items-center justify-center gap-x-3.5;
+    @apply flex-col items-center justify-center;
 }
