@@ -1,7 +1,7 @@
 'use client';
 
 import { UserRole } from '@enums/user-role.enum';
-import { FaRegEdit } from 'react-icons/fa';
+import { FaFileDownload, FaRegEdit } from 'react-icons/fa';
 import { HiOutlineDocumentRemove } from 'react-icons/hi';
 import { useAuth } from '../../../hooks/useAuth';
 import './style.css';
@@ -50,11 +50,20 @@ export default function Table({ columns, data, onDelete, onModify }: TableProps)
               {allowEditAccess && (
                 <td className="table-td">
                   <div className="button-container">
-                    <button className=" flex gap-x-2 text-primary hover:bg-blue-700" onClick={onModify}>
+                    <button
+                      className=" flex gap-x-2 text-white hover:bg-white border hover:border-blue-500 hover:text-primary p-2 bg-primary rounded"
+                      onClick={onModify}
+                    >
                       Modifică <FaRegEdit size={17} />
                     </button>
                     <button
-                      className="flex gap-x-2 text-red-500 mt-2 hover:"
+                      className="flex gap-x-2 text-white hover:text-green-500 hover:bg-white border mt-2 hover:border-green-500 bg-green-500 p-2 rounded"
+                      onClick={onDelete}
+                    >
+                      Descarcă <FaFileDownload size={17} />
+                    </button>
+                    <button
+                      className="flex gap-x-2 text-white hover:bg-white mt-2 border hover:border-red-500 hover:text-red-500 p-2 bg-red-500 rounded"
                       onClick={onDelete}
                     >
                       Șterge <HiOutlineDocumentRemove size={17} />

@@ -1,5 +1,5 @@
 .button {
-  @apply inline-block rounded border;
+  @apply flex justify-center items-center gap-x-1 rounded border;
 }
 
 .button.primary {

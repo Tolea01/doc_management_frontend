@@ -5,19 +5,18 @@ import Button from '@components/buttons/Button';
 import DatePickerField from '@components/fields/DatePicker';
 import InputField from '@components/fields/InputField';
 import SelectInputField from '@components/fields/SelectInputField';
-import Modal from '@components/modal/Modal';
 import Pagination from '@components/pagination/Pagination';
 import Table from '@components/tables/Table';
-import EntryDocumentForm from '@management/director/dashboard/entry-documents/EntryDocumentForm';
 import { entryDocumentService } from '@services/entry-document/entry-document.service';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { MdNoteAdd } from 'react-icons/md';
 import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
 import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import { useRouter } from 'next/navigation'
 
 export default function EntryDocuments() {
   const { control, watch } = useForm();
@@ -106,7 +105,11 @@ export default function EntryDocuments() {
           <Button
             size="small"
             variant="primary"
-            value="adaugă"
+            value={
+              <>
+                adaugă <MdNoteAdd size={15} />
+              </>
+            }
             onClick={() => router.push('entry-documents/create')}
           />
           <SelectInputField
