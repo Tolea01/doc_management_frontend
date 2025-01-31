@@ -36,8 +36,21 @@ export default function CreateEntryDocument() {
     return () => clearTimeout(timer);
   }, []);
 
-  const onSubmit = (data) => {
-    // mutate(data);
+const onSubmit = async (data: any) => {
+  if (!data.documentFile || data.documentFile.length === 0) {
+    toast.error('Trebuie să selectezi un fișier PDF!');
+    return;
+  }
+
+  try {
+    const file = data.documentFile[0];
+    const uploadResponse = await entryDocumentService.upload(file);
+
+    if (!uploadResponse.data.filenames) {
+      toast.error('Eroare la încărcarea fișierului!');
+      return;
+    }
+
     const documentData = {
       entry_number: data.entry_number,
       number: data.number,
@@ -50,11 +63,15 @@ export default function CreateEntryDocument() {
       executors: data.executors.map((executor: any) => executor.value),
       coordinators: data.coordinators.map((coordinator: any) => coordinator.value),
       execution_time: format(new Date(data.execution_time), 'yyyy-MM-dd'),
-      file_path: data.file_path || '/random-document.pdf',
+      file_path: uploadResponse.data.filenames[0],
     };
-    console.log(documentData);
-    mutate(data);
-  };
+
+    mutate(documentData);
+  } catch (error) {
+    toast.error(errorCatch(error));
+  }
+};
+
 
   return (
     <Modal

@@ -160,7 +160,7 @@ export default function EntryDocumentForm({
           rules={{ required: true }}
         />
         <FileInputField
-          name="document"
+          name="documentFile"
           control={control}
           className="w-1/2"
           id="upload-file"
