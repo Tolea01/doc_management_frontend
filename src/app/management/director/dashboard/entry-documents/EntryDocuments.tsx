@@ -137,7 +137,11 @@ export default function EntryDocuments() {
         </div>
       </form>
       <article>
-        <Table columns={columns} data={tableData} />
+        <Table
+          columns={columns}
+          data={tableData}
+          onModify={(id) => router.push(`entry-documents/update/${id}`)}
+        />
         <div className="pt-5 pb-5">
           {Array.isArray(tableData) && tableData.length > 0 && (
             <Pagination

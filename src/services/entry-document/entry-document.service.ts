@@ -31,11 +31,42 @@ class EntryDocumentService {
     const formData = new FormData();
     formData.append('files', file);
 
-    return axiosWithAuth.post<any>(
-      `${this.BASE_URL}/upload`,
-      formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } },
+    return axiosWithAuth.post<any>(`${this.BASE_URL}/upload`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  }
+
+  async deleteFile(filename: string): Promise<AxiosResponse<any>> {
+    const response: AxiosResponse<any, any> = await axiosWithAuth.post<any>(
+      `${this.BASE_URL}/delete-file/${filename}`,
     );
+
+    return response;
+  }
+
+  async update(id, data): Promise<AxiosResponse<any>> {
+    const response: AxiosResponse<any, any> = await axiosWithAuth.patch<any>(
+      `${this.BASE_URL}/${id}`,
+      data,
+    );
+
+    return response;
+  }
+
+  async delete(id): Promise<AxiosResponse<any>> {
+    const response: AxiosResponse<any, any> = await axiosWithAuth.delete<any>(
+      `${this.BASE_URL}/${id}`,
+    );
+
+    return response;
+  }
+
+  async getById(id: any): Promise<AxiosResponse<any, any>> {
+    const response: AxiosResponse<any, any> = await axiosWithAuth.get<any>(
+      `${this.BASE_URL}/${id}`,
+    );
+
+    return response;
   }
 }
 

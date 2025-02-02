@@ -31,7 +31,6 @@ export default function FileInputField({
             type="file"
             id={id}
             className="hidden"
-            multiple
             onChange={(event) => {
               const files = event.target.files;
               if (files && files.length > 0) {

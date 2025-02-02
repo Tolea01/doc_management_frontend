@@ -80,6 +80,7 @@ export default function EntryDocumentForm({
           label="Expeditor"
           placeholder="Introduceți expeditorii"
           rules={{ required: true }}
+          isMulti={false}
         />
         <SelectInputField
           options={personOptions}
@@ -90,6 +91,7 @@ export default function EntryDocumentForm({
           label="Primit de"
           placeholder="Introduceți de la cine ați primit"
           rules={{ required: true }}
+          isMulti={false}
         />
         <InputField
           type="text"
@@ -139,6 +141,7 @@ export default function EntryDocumentForm({
           label="Executori"
           id="entry-document-executors"
           rules={{ required: true }}
+          isMulti={true}
         />
         <SelectInputField
           options={userOptions}
@@ -149,6 +152,7 @@ export default function EntryDocumentForm({
           id="entry-document-coordinators"
           label="Coordonatori"
           rules={{ required: true }}
+          isMulti={true}
         />
         <DatePickerField
           className="w-full"

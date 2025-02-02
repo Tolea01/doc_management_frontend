@@ -1,5 +1,6 @@
 'use client';
 
+import Button from '@components/buttons/Button';
 import { UserRole } from '@enums/user-role.enum';
 import { FaFileDownload, FaRegEdit } from 'react-icons/fa';
 import { HiOutlineDocumentRemove } from 'react-icons/hi';
@@ -9,11 +10,18 @@ import './style.css';
 interface TableProps {
   columns: { label: string; key: string }[];
   data: any[];
-  onModify: () => any;
-  onDelete: () => any;
+  onModify: (id: string) => any;
+  onDelete: (id: string) => any;
+  onDownload: (id: string) => any;
 }
 
-export default function Table({ columns, data, onDelete, onModify }: TableProps) {
+export default function Table({
+  columns,
+  data,
+  onDelete,
+  onModify,
+  onDownload,
+}: TableProps) {
   const { role } = useAuth();
   const allowEditAccess: boolean =
     role === UserRole.SECRETARY || role === UserRole.DIRECTOR;
@@ -50,24 +58,36 @@ export default function Table({ columns, data, onDelete, onModify }: TableProps)
               {allowEditAccess && (
                 <td className="table-td">
                   <div className="button-container">
-                    <button
-                      className=" flex gap-x-2 text-white hover:bg-white border hover:border-blue-500 hover:text-primary p-2 bg-primary rounded"
-                      onClick={onModify}
-                    >
-                      Modifică <FaRegEdit size={17} />
-                    </button>
-                    <button
-                      className="flex gap-x-2 text-white hover:text-green-500 hover:bg-white border mt-2 hover:border-green-500 bg-green-500 p-2 rounded"
-                      onClick={onDelete}
-                    >
-                      Descarcă <FaFileDownload size={17} />
-                    </button>
-                    <button
-                      className="flex gap-x-2 text-white hover:bg-white mt-2 border hover:border-red-500 hover:text-red-500 p-2 bg-red-500 rounded"
-                      onClick={onDelete}
-                    >
-                      Șterge <HiOutlineDocumentRemove size={17} />
-                    </button>
+                    <Button
+                      size="small"
+                      variant="secondary"
+                      value={
+                        <>
+                          Modifică <FaRegEdit size={15} />
+                        </>
+                      }
+                      onClick={() => onModify(row.id)}
+                    />
+                    <Button
+                      size="small"
+                      variant="primary"
+                      value={
+                        <>
+                          Descarcă <FaFileDownload size={15} />
+                        </>
+                      }
+                      onClick={() => onDownload(row.id)}
+                    />
+                    <Button
+                      size="small"
+                      variant="danger"
+                      value={
+                        <>
+                          Șterge <HiOutlineDocumentRemove size={15} />
+                        </>
+                      }
+                      onClick={() => onDelete(row.id)}
+                    />
                   </div>
                 </td>
               )}

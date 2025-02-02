@@ -20,8 +20,8 @@ export default function CreateEntryDocument() {
     mutationKey: ['createEntryDocument'],
     mutationFn: (data) => entryDocumentService.create(data),
     onSuccess(): void {
-      reset();
       toast.success('Documentul a fost adaugat cu succes!');
+      window.location.reload()
     },
     onError(error: Error): void {
       toast.error(errorCatch(error));
@@ -36,42 +36,41 @@ export default function CreateEntryDocument() {
     return () => clearTimeout(timer);
   }, []);
 
-const onSubmit = async (data: any) => {
-  if (!data.documentFile || data.documentFile.length === 0) {
-    toast.error('Trebuie să selectezi un fișier PDF!');
-    return;
-  }
-
-  try {
-    const file = data.documentFile[0];
-    const uploadResponse = await entryDocumentService.upload(file);
-
-    if (!uploadResponse.data.filenames) {
-      toast.error('Eroare la încărcarea fișierului!');
+  const onSubmit = async (data: any) => {
+    if (!data.documentFile || data.documentFile.length === 0) {
+      toast.error('Trebuie să selectezi un fișier PDF!');
       return;
     }
 
-    const documentData = {
-      entry_number: data.entry_number,
-      number: data.number,
-      sender: data.sender[0]?.value,
-      received: data.received[0]?.value,
-      comment: data.comment || '',
-      resolution: data.resolution || '',
-      entry_date: format(new Date(data.entry_date), 'yyyy-MM-dd'),
-      date: format(new Date(data.date), 'yyyy-MM-dd'),
-      executors: data.executors.map((executor: any) => executor.value),
-      coordinators: data.coordinators.map((coordinator: any) => coordinator.value),
-      execution_time: format(new Date(data.execution_time), 'yyyy-MM-dd'),
-      file_path: uploadResponse.data.filenames[0],
-    };
+    try {
+      const file = data.documentFile[0];
+      const uploadResponse = await entryDocumentService.upload(file);
 
-    mutate(documentData);
-  } catch (error) {
-    toast.error(errorCatch(error));
-  }
-};
+      if (!uploadResponse.data.filenames) {
+        toast.error('Eroare la încărcarea fișierului!');
+        return;
+      }
 
+      const documentData = {
+        entry_number: data.entry_number,
+        number: data.number,
+        sender: data.sender?.value,
+        received: data.received?.value,
+        comment: data.comment || '',
+        resolution: data.resolution || '',
+        entry_date: format(new Date(data.entry_date), 'yyyy-MM-dd'),
+        date: format(new Date(data.date), 'yyyy-MM-dd'),
+        executors: data.executors.map((executor: any) => executor.value),
+        coordinators: data.coordinators.map((coordinator: any) => coordinator.value),
+        execution_time: format(new Date(data.execution_time), 'yyyy-MM-dd'),
+        file_path: uploadResponse.data.filenames[0],
+      };
+
+      mutate(documentData);
+    } catch (error) {
+      toast.error(errorCatch(error));
+    }
+  };
 
   return (
     <Modal

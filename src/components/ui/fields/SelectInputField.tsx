@@ -1,5 +1,5 @@
-import Select from 'react-select';
 import { Controller } from 'react-hook-form';
+import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import './styles.css';
 
@@ -12,6 +12,7 @@ interface SelectInputFieldProps {
   rules?: object;
   label?: string;
   id: string;
+  isMulti: boolean;
 }
 
 const animatedComponents = makeAnimated();
@@ -25,7 +26,8 @@ export default function SelectInputField({
   rules = {},
   label,
   id,
-}: SelectInputFieldProps & { label: string; id: string }) {
+  isMulti = false,
+}: SelectInputFieldProps & { label: any; id: any }) {
   return (
     <Controller
       name={name}
@@ -42,10 +44,16 @@ export default function SelectInputField({
             options={options}
             placeholder={placeholder}
             onChange={(selectedOption) => field.onChange(selectedOption)}
-            value={options.find((option) => option.value === field.value)}
+            value={
+              isMulti
+                ? options.filter((option) =>
+                    field.value?.some((val: any) => val.value === option.value),
+                  )
+                : options.find((option) => option.value === field.value?.value)
+            }
             components={animatedComponents}
-            closeMenuOnSelect={false}
-            isMulti
+            closeMenuOnSelect={!isMulti}
+            isMulti={isMulti}
             classNamePrefix="custom-select"
             styles={{
               control: (base) => ({
