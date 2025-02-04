@@ -36,12 +36,27 @@ class EntryDocumentService {
     });
   }
 
-  async downloadFile(filename: string): Promise<AxiosResponse<any>> {
-    const response: AxiosResponse<any, any> = await axiosWithAuth.get(
-      `${this.BASE_URL}/download/${filename}`,
-    );
+  async downloadFile(filename: string) {
+    try {
+      const response = await axiosWithAuth.get(`${this.BASE_URL}/download/${filename}`, {
+        responseType: 'blob',
+      });
 
-    return response;
+      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Eroare la descărcarea fișierului:', error);
+      throw error;
+    }
   }
 
   async deleteFile(filename: string): Promise<AxiosResponse<any>> {

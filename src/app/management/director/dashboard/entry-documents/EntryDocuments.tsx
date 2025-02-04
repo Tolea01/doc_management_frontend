@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { MdNoteAdd } from 'react-icons/md';
+import { toast } from 'sonner';
 import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
 import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
 
@@ -62,6 +63,24 @@ export default function EntryDocuments() {
     { label: 'Statut', key: 'status' },
     { label: 'Termen', key: 'execution_time' },
   ];
+
+  const onDownload = async (id: any) => {
+    try {
+      const document = await entryDocumentService.getById(id);
+      const fileName = document.data?.file_path;
+      await entryDocumentService.downloadFile(fileName);
+    } catch (error) {
+      toast.error('Eroare la descărcarea fișierului');
+    }
+  };
+
+  const onDelete = async (id: any) => {
+    try {
+      await entryDocumentService.delete(id);
+    } catch (error) {
+      toast.error('Eroare la ștergerea fișierului fișierului');
+    }
+  };
 
   const tableData = data?.data.data.map((doc: any) => ({
     id: doc.id,
@@ -141,6 +160,8 @@ export default function EntryDocuments() {
           columns={columns}
           data={tableData}
           onModify={(id) => router.push(`entry-documents/update/${id}`)}
+          onDownload={(id) => onDownload(id)}
+          onDelete={(id) => onDelete(id)}
         />
         <div className="pt-5 pb-5">
           {Array.isArray(tableData) && tableData.length > 0 && (
