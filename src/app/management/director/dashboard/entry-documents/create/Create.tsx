@@ -37,13 +37,13 @@ export default function CreateEntryDocument() {
   }, []);
 
   const onSubmit = async (data: any) => {
-    if (!data.documentFile || data.documentFile.length === 0) {
+    if (!data.documentFile) {
       toast.error('Trebuie să selectezi un fișier PDF!');
       return;
     }
 
     try {
-      const file = data.documentFile[0];
+      const file = data.documentFile;
       const uploadResponse = await entryDocumentService.upload(file);
 
       if (!uploadResponse.data.filenames) {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 interface FileInputFieldProps {
@@ -8,6 +8,7 @@ interface FileInputFieldProps {
   id: string;
   className?: string;
   rules?: object;
+  fileName?: string;
 }
 
 export default function FileInputField({
@@ -17,8 +18,13 @@ export default function FileInputField({
   id,
   className,
   rules = {},
+  fileName = '',
 }: FileInputFieldProps) {
-  const [fileNames, setFileNames] = useState<string[]>([]);
+  const [currentFileName, setCurrentFileName] = useState<string>(fileName);
+
+  useEffect(() => {
+    setCurrentFileName(fileName);
+  }, [fileName]);
 
   return (
     <Controller
@@ -32,14 +38,13 @@ export default function FileInputField({
             id={id}
             className="hidden"
             onChange={(event) => {
-              const files = event.target.files;
-              if (files && files.length > 0) {
-                const fileList = Array.from(files);
-                setFileNames(fileList.map((file) => file.name));
-                onChange(fileList);
+              const file = event.target.files?.[0];
+              if (file) {
+                setCurrentFileName(file.name);
+                onChange(file);
               } else {
-                setFileNames([]);
-                onChange([]);
+                setCurrentFileName('');
+                onChange(null);
               }
             }}
           />
@@ -47,16 +52,14 @@ export default function FileInputField({
             htmlFor={id}
             className="px-4 py-2 bg-primary text-white rounded-lg cursor-pointer hover:bg-white hover:border hover:border-primary hover:text-primary transition text-sm text-center"
           >
-            Selectează fișiere
+            Selectează fișier
           </label>
           <div className="text-sm text-gray-500">
-            {fileNames.length > 0
-              ? fileNames.map((file, index) => (
-                  <p key={index} className="truncate">
-                    📄 {file}
-                  </p>
-                ))
-              : 'Nici un fișier selectat'}
+            {currentFileName ? (
+              <p className="truncate">📄 {currentFileName}</p>
+            ) : (
+              'Niciun fișier selectat'
+            )}
           </div>
         </fieldset>
       )}

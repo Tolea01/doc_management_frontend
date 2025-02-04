@@ -9,12 +9,14 @@ import './style.css';
 
 interface EntryDocumentFormProps {
   control: any;
+  fileName?: string
   onSubmitForm: () => any;
 }
 
 export default function EntryDocumentForm({
   control,
   onSubmitForm,
+  fileName
 }: EntryDocumentFormProps) {
   const {
     data: users,
@@ -168,6 +170,7 @@ export default function EntryDocumentForm({
           control={control}
           className="w-1/2"
           id="upload-file"
+          fileName={fileName}
         />
       </form>
     </section>

@@ -36,6 +36,14 @@ class EntryDocumentService {
     });
   }
 
+  async downloadFile(filename: string): Promise<AxiosResponse<any>> {
+    const response: AxiosResponse<any, any> = await axiosWithAuth.get(
+      `${this.BASE_URL}/download/${filename}`,
+    );
+
+    return response;
+  }
+
   async deleteFile(filename: string): Promise<AxiosResponse<any>> {
     const response: AxiosResponse<any, any> = await axiosWithAuth.post<any>(
       `${this.BASE_URL}/delete-file/${filename}`,
