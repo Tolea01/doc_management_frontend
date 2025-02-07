@@ -1,5 +1,5 @@
 .auth-wrapper {
-  @apply h-screen flex md:mt-24 justify-center;
+  @apply flex md:mt-24 justify-center;
 }
 
 .auth-form {

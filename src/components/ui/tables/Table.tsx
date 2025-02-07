@@ -1,6 +1,5 @@
 'use client';
 
-import Button from '@components/buttons/Button';
 import { UserRole } from '@enums/user-role.enum';
 import { FaFileDownload, FaRegEdit } from 'react-icons/fa';
 import { HiOutlineDocumentRemove } from 'react-icons/hi';
@@ -58,36 +57,24 @@ export default function Table({
               {allowEditAccess && (
                 <td className="table-td">
                   <div className="button-container">
-                    <Button
-                      size="small"
-                      variant="secondary"
-                      value={
-                        <>
-                          Modifică <FaRegEdit size={15} />
-                        </>
-                      }
+                    <button
+                      className="flex gap-x-2 text-primary hover:text-blue-800"
                       onClick={() => onModify(row.id)}
-                    />
-                    <Button
-                      size="small"
-                      variant="primary"
-                      value={
-                        <>
-                          Descarcă <FaFileDownload size={15} />
-                        </>
-                      }
+                    >
+                      Modifică <FaRegEdit size={17} />
+                    </button>
+                    <button
+                      className="flex gap-x-2 text-green-500 hover:text-green-700"
                       onClick={() => onDownload(row.id)}
-                    />
-                    <Button
-                      size="small"
-                      variant="danger"
-                      value={
-                        <>
-                          Șterge <HiOutlineDocumentRemove size={15} />
-                        </>
-                      }
+                    >
+                      Descarcă <FaFileDownload size={17} />
+                    </button>
+                    <button
+                      className="flex gap-x-2 text-red-500 mt-2 md:mt-0 hover:text-red-700"
                       onClick={() => onDelete(row.id)}
-                    />
+                    >
+                      Șterge <HiOutlineDocumentRemove size={17} />
+                    </button>
                   </div>
                 </td>
               )}

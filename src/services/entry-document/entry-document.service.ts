@@ -7,7 +7,7 @@ class EntryDocumentService {
 
   async getAll(
     page: number = 1,
-    limit: number = 10,
+    limit: number = 25,
     filter: any = {},
   ): Promise<AxiosResponse<any>> {
     const response: AxiosResponse<any, any> = await axiosWithAuth.get<IEntryDocument>(

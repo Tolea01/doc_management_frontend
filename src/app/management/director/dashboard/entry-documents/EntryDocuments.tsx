@@ -21,7 +21,6 @@ import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
 
 export default function EntryDocuments() {
   const { control, watch } = useForm();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const selectOptions = getDocumentStatusOptions();
@@ -46,7 +45,7 @@ export default function EntryDocuments() {
 
   const { data, isLoading } = useQuery({
     queryKey: ['entryDocuments', currentPage, filters],
-    queryFn: () => entryDocumentService.getAll(currentPage, itemsPerPage, filters),
+    queryFn: () => entryDocumentService.getAll(),
   });
 
   const totalItems: any = data?.data?.total || 0;
