@@ -30,58 +30,60 @@ export default function Table({
   }
 
   return (
-    <div className="table-container">
-      <table className="table">
-        <thead className="table-head">
-          <tr>
-            {columns.map((col: { label: string; key: string }, index: number) => (
-              <th key={index} scope="col" className="table-th">
-                {col.label}
-              </th>
-            ))}
-            {allowEditAccess && (
-              <th scope="col" className="table-th">
-                Acțiuni
-              </th>
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((row: any, rowIndex: number) => (
-            <tr key={rowIndex} className="table-row">
-              {columns.map((col: { label: string; key: string }, colIndex: number) => (
-                <td key={colIndex} className="table-td">
-                  {row[col.key] || '-'}
-                </td>
+    <div className='flex justify-center'>
+      <div className="table-container">
+        <table className="table">
+          <thead className="table-head">
+            <tr>
+              {columns.map((col: { label: string; key: string }, index: number) => (
+                <th key={index} scope="col" className="table-th">
+                  {col.label}
+                </th>
               ))}
               {allowEditAccess && (
-                <td className="table-td">
-                  <div className="button-container">
-                    <button
-                      className="flex gap-x-2 text-primary hover:text-blue-800"
-                      onClick={() => onModify(row.id)}
-                    >
-                      Modifică <FaRegEdit size={17} />
-                    </button>
-                    <button
-                      className="flex gap-x-2 text-green-500 hover:text-green-700"
-                      onClick={() => onDownload(row.id)}
-                    >
-                      Descarcă <FaFileDownload size={17} />
-                    </button>
-                    <button
-                      className="flex gap-x-2 text-red-500 mt-2 md:mt-0 hover:text-red-700"
-                      onClick={() => onDelete(row.id)}
-                    >
-                      Șterge <HiOutlineDocumentRemove size={17} />
-                    </button>
-                  </div>
-                </td>
+                <th scope="col" className="table-th">
+                  Acțiuni
+                </th>
               )}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((row: any, rowIndex: number) => (
+              <tr key={rowIndex} className="table-row">
+                {columns.map((col: { label: string; key: string }, colIndex: number) => (
+                  <td key={colIndex} className="table-td">
+                    {row[col.key] || '-'}
+                  </td>
+                ))}
+                {allowEditAccess && (
+                  <td className="table-td">
+                    <div className="button-container">
+                      <button
+                        className="flex gap-x-2 text-primary hover:text-blue-800"
+                        onClick={() => onModify(row.id)}
+                      >
+                        Modifică <FaRegEdit size={17} />
+                      </button>
+                      <button
+                        className="flex gap-x-2 text-green-500 hover:text-green-700"
+                        onClick={() => onDownload(row.id)}
+                      >
+                        Descarcă <FaFileDownload size={17} />
+                      </button>
+                      <button
+                        className="flex gap-x-2 text-red-500 mt-2 md:mt-0 hover:text-red-700"
+                        onClick={() => onDelete(row.id)}
+                      >
+                        Șterge <HiOutlineDocumentRemove size={17} />
+                      </button>
+                    </div>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
