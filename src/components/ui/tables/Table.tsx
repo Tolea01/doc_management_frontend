@@ -4,6 +4,7 @@ import { UserRole } from '@enums/user-role.enum';
 import { FaFileDownload, FaRegEdit } from 'react-icons/fa';
 import { HiOutlineDocumentRemove } from 'react-icons/hi';
 import { useAuth } from '../../../hooks/useAuth';
+import './style.css';
 
 interface TableProps {
   columns: { label: string; key: string }[];
@@ -24,11 +25,11 @@ export default function Table({
   const allowEditAccess = role === UserRole.SECRETARY || role === UserRole.DIRECTOR;
 
   if (!Array.isArray(data) || data.length === 0) {
-    return <p className="text-center text-gray-500">Nu există date disponibile.</p>;
+    return null;
   }
 
   return (
-    <div className='flex justify-center'>
+    <div className="flex justify-center">
       <div className="table-container">
         <table className="table">
           <thead className="table-head">
