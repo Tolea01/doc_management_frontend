@@ -45,7 +45,7 @@ export default function EntryDocuments() {
 
   const { data, isLoading } = useQuery({
     queryKey: ['entryDocuments', currentPage, filters],
-    queryFn: () => entryDocumentService.getAll(),
+    queryFn: () => entryDocumentService.getAll(currentPage, itemsPerPage, filters),
   });
 
   const totalItems: any = data?.data?.total || 0;
