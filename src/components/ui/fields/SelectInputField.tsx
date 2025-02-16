@@ -1,7 +1,7 @@
-import { Controller } from 'react-hook-form';
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
-import './styles.css';
+import { Controller } from 'react-hook-form'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated'
+import './styles.css'
 
 interface SelectInputFieldProps {
   className?: string;
@@ -79,9 +79,13 @@ export default function SelectInputField({
               }),
               menu: (base) => ({
                 ...base,
-                boxShadow: '0 1px 2px rgb(0 0 0 / 0.05)',
+                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)',
+                border: '1px solid rgb(203, 213, 225)',
+                borderRadius: '0.375rem',
+                backgroundColor: 'white',
                 zIndex: 20,
               }),
+
               option: (base, { isFocused, isSelected }) => ({
                 ...base,
                 backgroundColor: isSelected
