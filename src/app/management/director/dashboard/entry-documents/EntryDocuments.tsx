@@ -76,6 +76,7 @@ export default function EntryDocuments() {
   const onDelete = async (id: any) => {
     try {
       await entryDocumentService.delete(id);
+      window.location.reload()
     } catch (error) {
       toast.error('Eroare la ștergerea fișierului fișierului');
     }

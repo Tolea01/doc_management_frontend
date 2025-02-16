@@ -50,11 +50,11 @@ export default function FileInputField({
           />
           <label
             htmlFor={id}
-            className="px-4 py-2 bg-primary text-white rounded-lg cursor-pointer hover:bg-white hover:border hover:border-primary hover:text-primary transition text-sm text-center"
+            className="px-4 py-2 bg-primary text-white rounded-lg cursor-pointer hover:bg-white border hover:border-primary hover:text-primary transition text-sm text-center max-w-[200px]"
           >
             Selectează fișier
           </label>
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 max-w-[200px]">
             {currentFileName ? (
               <p className="truncate">📄 {currentFileName}</p>
             ) : (
