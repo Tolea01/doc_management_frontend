@@ -11,7 +11,7 @@ interface TableProps {
   data: any[];
   onModify: (id: string) => any;
   onDelete: (id: string) => any;
-  onDownload: (id: string) => any;
+  onDownload?: (id: string) => any;
 }
 
 export default function Table({
@@ -63,12 +63,14 @@ export default function Table({
                       >
                         Modifică <FaRegEdit size={17} />
                       </button>
-                      <button
-                        className="flex gap-x-2 text-green-500 hover:text-green-700"
-                        onClick={() => onDownload(row.id)}
-                      >
-                        Descarcă <FaFileDownload size={17} />
-                      </button>
+                      {onDownload && (
+                        <button
+                          className="flex gap-x-2 text-green-500 hover:text-green-700"
+                          onClick={() => onDownload(row.id)}
+                        >
+                          Descarcă <FaFileDownload size={17} />
+                        </button>
+                      )}
                       <button
                         className="flex gap-x-2 text-red-500 mt-2 md:mt-0 hover:text-red-700"
                         onClick={() => onDelete(row.id)}
