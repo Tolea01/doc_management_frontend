@@ -5,6 +5,8 @@ import Loader from '@components/loaders/Loader';
 import { publicRoutes } from '@config/routes.config';
 import { authService } from '@services/auth/auth.service';
 import { useMutation } from '@tanstack/react-query';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { IoMdMenu } from 'react-icons/io';
@@ -12,11 +14,9 @@ import { LuLogOut } from 'react-icons/lu';
 import { MdMenuOpen } from 'react-icons/md';
 import { toast } from 'sonner';
 import { useAuth } from '../../../hooks/useAuth';
+import { MenuItem } from '../../../types/menu.types';
 import { menuItems } from './menu-items.config';
 import './style.css';
-import { MenuItem } from '../../../types/menu.types';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import Link from 'next/link';
 
 export default function Sidebar() {
   const pathname: string = usePathname();
@@ -60,7 +60,7 @@ export default function Sidebar() {
 
           <div className="sidebar-items">
             <div className="px-1">
-              <ul className="sidebar-items-list">
+              <ul className="sidebar-items-list mt-3">
                 {menuItems[role].map((item: MenuItem, index: number) => {
                   const isActive = pathname === item.path;
 
@@ -99,7 +99,7 @@ export default function Sidebar() {
 
       {isSidebarOpen && (
         <div className="sidebar-expanded">
-          <div className="expanded-content">
+          <div className="expanded-content mt-3">
             <ul className="expanded-links">
               {menuItems[role].map((item: MenuItem, index: number) => {
                 const isActive = pathname === item.path;
