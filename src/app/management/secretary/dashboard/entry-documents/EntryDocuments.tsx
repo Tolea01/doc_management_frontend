@@ -7,7 +7,7 @@ import InputField from '@components/fields/InputField';
 import SelectInputField from '@components/fields/SelectInputField';
 import Pagination from '@components/pagination/Pagination';
 import Table from '@components/tables/Table';
-import { internalDocumentService } from '@services/internal-document/internal-document.service';
+import { entryDocumentService } from '@services/entry-document/entry-document.service';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
@@ -19,7 +19,7 @@ import { toast } from 'sonner';
 import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
 import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
 
-export default function InternalDocuments() {
+export default function EntryDocuments() {
   const { control, watch } = useForm();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -44,8 +44,8 @@ export default function InternalDocuments() {
   }, [searchFilters]);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['internalDocuments', currentPage, filters],
-    queryFn: () => internalDocumentService.getAll(currentPage, itemsPerPage, filters),
+    queryKey: ['entryDocuments', currentPage, filters],
+    queryFn: () => entryDocumentService.getAll(currentPage, itemsPerPage, filters),
   });
 
   const totalItems: any = data?.data?.total || 0;
@@ -57,15 +57,17 @@ export default function InternalDocuments() {
     { label: 'Data', key: 'date' },
     { label: 'Executori', key: 'executor' },
     { label: 'Coordonatori', key: 'coordinator' },
+    { label: 'Primit de', key: 'received' },
+    { label: 'Expeditor', key: 'sender' },
     { label: 'Statut', key: 'status' },
     { label: 'Termen', key: 'execution_time' },
   ];
 
   const onDownload = async (id: any) => {
     try {
-      const document = await internalDocumentService.getById(id);
+      const document = await entryDocumentService.getById(id);
       const fileName = document.data?.file_path;
-      await internalDocumentService.downloadFile(fileName);
+      await entryDocumentService.downloadFile(fileName);
     } catch (error) {
       toast.error('Eroare la descărcarea fișierului');
     }
@@ -73,8 +75,8 @@ export default function InternalDocuments() {
 
   const onDelete = async (id: any) => {
     try {
-      await internalDocumentService.delete(id);
-      window.location.reload();
+      await entryDocumentService.delete(id);
+      window.location.reload()
     } catch (error) {
       toast.error('Eroare la ștergerea fișierului fișierului');
     }
@@ -94,6 +96,8 @@ export default function InternalDocuments() {
         {e.name} {e.surname}
       </div>
     )),
+    received: doc.received.name,
+    sender: doc.sender.name,
     status: <Badge variant={getDocumentBadgeVariant(doc.status)} name={doc.status} />,
     execution_time: doc.execution_time,
   }));
@@ -101,7 +105,7 @@ export default function InternalDocuments() {
   return (
     <section>
       <header className="page-header">
-        <h1 className="page-title">Documente interne</h1>
+        <h1 className="page-title">Documente de intrare</h1>
       </header>
       <form className="search-document-form">
         <div className="mb-4 lg:mb-0">
@@ -109,7 +113,7 @@ export default function InternalDocuments() {
             name="number"
             label="Caută document"
             control={control}
-            id="internal-document-search"
+            id="entry-document-search"
             type="search"
             className="w-full"
             size="medium"
@@ -125,28 +129,28 @@ export default function InternalDocuments() {
                 adaugă <MdNoteAdd size={15} />
               </>
             }
-            onClick={() => router.push('internal-documents/create')}
+            onClick={() => router.push('entry-documents/create')}
           />
           <SelectInputField
             options={selectOptions}
             className="w-full"
             control={control}
             name="status"
-            id="internal-document-status-select"
+            id="entry-document-status-select"
             placeholder={'Caută după statut'}
           />
           <DatePickerField
             className="w-full"
             control={control}
             name="date"
-            id="internal-document-date-select"
+            id="entry-document-date-select"
             placeholder={'Caută după dată'}
           />
           <DatePickerField
             className="w-full"
             control={control}
             name="execution_time"
-            id="internal-document-execution-time-select"
+            id="entry-document-execution-time-select"
             placeholder={'Caută după termen'}
           />
         </div>
@@ -155,7 +159,7 @@ export default function InternalDocuments() {
         <Table
           columns={columns}
           data={tableData}
-          onModify={(id) => router.push(`internal-documents/update/${id}`)}
+          onModify={(id) => router.push(`entry-documents/update/${id}`)}
           onDownload={(id) => onDownload(id)}
           onDelete={(id) => onDelete(id)}
         />
