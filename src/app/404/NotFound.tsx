@@ -15,7 +15,7 @@ export default function NotFoundPage() {
           size="medium"
           value="Înapoi"
           variant="secondary"
-          className="my-4"
+          className="my-4 mx-auto"
           onClick={() => router.back()}
         />
       </div>

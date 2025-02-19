@@ -18,7 +18,7 @@ export default function UnauthorizedPage() {
         size="medium"
         value="Mergi la pagina de logare"
         variant="secondary"
-        className="my-4"
+        className="my-4 mx-auto"
         onClick={() => router.replace('/auth/login')}
       />
     </div>
