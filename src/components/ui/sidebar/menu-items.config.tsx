@@ -93,27 +93,27 @@ export const menuItems: Record<UserRole, MenuItem[]> = {
 
   [UserRole.HEAD_OF_DIRECTION]: [
     {
-      path: new DASHBOARD_PAGES(UserRole.SECRETARY).HOME,
+      path: new DASHBOARD_PAGES(UserRole.HEAD_OF_DIRECTION).HOME,
       label: 'Pagina principală',
       icon: <FaHome size={25} />,
     },
     {
-      path: new DASHBOARD_PAGES(UserRole.SECRETARY).ENTRY_DOCUMENTS,
+      path: new DASHBOARD_PAGES(UserRole.HEAD_OF_DIRECTION).ENTRY_DOCUMENTS,
       label: 'Documente de intrare',
       icon: <IoDocumentSharp size={25} />,
     },
     {
-      path: new DASHBOARD_PAGES(UserRole.SECRETARY).EXIT_DOCUMENTS,
+      path: new DASHBOARD_PAGES(UserRole.HEAD_OF_DIRECTION).EXIT_DOCUMENTS,
       label: 'Documente de ieșire',
       icon: <IoDocumentTextSharp size={25} />,
     },
     {
-      path: new DASHBOARD_PAGES(UserRole.SECRETARY).INTERNAL_DOCUMENTS,
+      path: new DASHBOARD_PAGES(UserRole.HEAD_OF_DIRECTION).INTERNAL_DOCUMENTS,
       label: 'Documente interne',
       icon: <MdDocumentScanner size={25} />,
     },
     {
-      path: new DASHBOARD_PAGES(UserRole.SECRETARY).SETTINGS,
+      path: new DASHBOARD_PAGES(UserRole.HEAD_OF_DIRECTION).SETTINGS,
       label: 'Setări profil',
       icon: <MdOutlineSettings size={25} />,
     },
