@@ -22,7 +22,8 @@ export default function Table({
   onDownload,
 }: TableProps) {
   const { role } = useAuth();
-  const allowEditAccess = role === UserRole.SECRETARY || role === UserRole.DIRECTOR;
+  const allowEditAccess =
+    role === UserRole.SECRETARY || role === UserRole.DIRECTOR || role === UserRole.ADMIN;
 
   if (!Array.isArray(data) || data.length === 0) {
     return null;

@@ -28,7 +28,7 @@ class AuthService {
     data: IAuthRegisterForm,
   ): Promise<AxiosResponse<IAuthRegisterResponse, any>> {
     const response: AxiosResponse<IAuthRegisterResponse, any> =
-      await axiosClassic.post<IAuthRegisterResponse>(`${this.BASE_URL}/register`, data);
+      await axiosWithAuth.post<IAuthRegisterResponse>(`${this.BASE_URL}/register`, data);
 
     return response;
   }
