@@ -62,7 +62,7 @@ export default function UpdateEntryDocument() {
       const userData = {
         name: data.name,
         surname: data.surname,
-        password: data.password,
+        password: data.password ? data.password : undefined,
         role: data.role?.value,
         photo: 'photo',
         phone_number: data.phone_number,
