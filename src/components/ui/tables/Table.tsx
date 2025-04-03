@@ -40,11 +40,9 @@ export default function Table({
                   {col.label}
                 </th>
               ))}
-              {allowEditAccess && (
-                <th scope="col" className="table-th">
-                  Acțiuni
-                </th>
-              )}
+              <th scope="col" className="table-th">
+                Acțiuni
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -55,32 +53,34 @@ export default function Table({
                     {row[col.key] || '-'}
                   </td>
                 ))}
-                {allowEditAccess && (
-                  <td className="table-td">
-                    <div className="button-container">
+                <td className="table-td">
+                  <div className="button-container">
+                    {allowEditAccess && (
                       <button
                         className="flex gap-x-2 text-primary hover:text-blue-800"
                         onClick={() => onModify(row.id)}
                       >
                         Modifică <FaRegEdit size={17} />
                       </button>
-                      {onDownload && (
-                        <button
-                          className="flex gap-x-2 text-green-500 hover:text-green-700"
-                          onClick={() => onDownload(row.id)}
-                        >
-                          Descarcă <FaFileDownload size={17} />
-                        </button>
-                      )}
+                    )}
+                    {onDownload && (
+                      <button
+                        className="flex gap-x-2 text-green-500 hover:text-green-700"
+                        onClick={() => onDownload(row.id)}
+                      >
+                        Descarcă <FaFileDownload size={17} />
+                      </button>
+                    )}
+                    {allowEditAccess && (
                       <button
                         className="flex gap-x-2 text-red-500 mt-2 md:mt-0 hover:text-red-700"
                         onClick={() => onDelete(row.id)}
                       >
                         Șterge <HiOutlineDocumentRemove size={17} />
                       </button>
-                    </div>
-                  </td>
-                )}
+                    )}
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
