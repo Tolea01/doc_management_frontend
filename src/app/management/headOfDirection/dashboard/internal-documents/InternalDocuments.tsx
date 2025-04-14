@@ -17,7 +17,7 @@ import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
 import Loader from '@components/loaders/Loader'
 import { internalDocumentService } from '@services/internal-document/internal-document.service'
 
-export default function EntryDocuments() {
+export default function InternalDocuments() {
   const { control } = useForm();
   const selectOptions = getDocumentStatusOptions();
   const { user } = useAuth();
