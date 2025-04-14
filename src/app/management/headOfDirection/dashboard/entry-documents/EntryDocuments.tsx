@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import { useAuth } from '../../../../../hooks/useAuth';
 import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
 import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
+import Loader from '@components/loaders/Loader'
 
 export default function EntryDocuments() {
   const { control } = useForm();
@@ -101,6 +102,8 @@ export default function EntryDocuments() {
     status: <Badge variant={getDocumentBadgeVariant(doc.status)} name={doc.status} />,
     execution_time: doc.execution_time,
   }));
+
+  if (isLoading) return <Loader />;
 
   return (
     <section>
