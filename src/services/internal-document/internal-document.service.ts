@@ -91,6 +91,14 @@ class InternalDocumentService {
 
     return response;
   }
+
+  async getByCoordinator(id: any): Promise<AxiosResponse<any, any>> {
+    const response: AxiosResponse<any, any> = await axiosWithAuth.get<any>(
+      `${this.BASE_URL}/coordinator/${id}`,
+    );
+
+    return response;
+  }
 }
 
 export const internalDocumentService: InternalDocumentService =
