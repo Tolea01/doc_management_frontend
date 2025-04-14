@@ -6,5 +6,5 @@ export const metadada: Metadata = {
 };
 
 export default function directorPage() {
-  return <p>secretary page</p>;
+  return <p>head of direction page</p>;
 }

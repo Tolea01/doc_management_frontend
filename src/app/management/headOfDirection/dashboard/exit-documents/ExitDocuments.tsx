@@ -1,54 +1,51 @@
 'use client';
 
-import Button from '@components/buttons/Button';
 import DatePickerField from '@components/fields/DatePicker';
 import InputField from '@components/fields/InputField';
-import SelectInputField from '@components/fields/SelectInputField';
-import Pagination from '@components/pagination/Pagination';
+import Loader from '@components/loaders/Loader';
 import Table from '@components/tables/Table';
 import { entryDocumentService } from '@services/entry-document/entry-document.service';
 import { exitDocumentService } from '@services/exit-document/exit-document.service';
 import { useQuery } from '@tanstack/react-query';
-import { format } from 'date-fns';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { MdNoteAdd } from 'react-icons/md';
+import { isSameDay, parseISO } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
-import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
+import { useAuth } from '../../../../../hooks/useAuth';
 
 export default function ExitDocuments() {
-  const { control, watch } = useForm();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
-  const selectOptions = getDocumentStatusOptions();
-  const searchFilters = watch();
-  const router: AppRouterInstance = useRouter();
-
-  const filters = useMemo(() => {
-    return Object.fromEntries(
-      Object.entries(searchFilters || {})
-        .filter(([_, value]) => value !== null && value !== '' && value !== undefined)
-        .map(([key, value]) => {
-          if (key === 'status' && value?.label) {
-            return [key, value.label];
-          }
-          if (value instanceof Date) {
-            return [key, format(value, 'yyyy-MM-dd')];
-          }
-          return [key, value];
-        }),
-    );
-  }, [searchFilters]);
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['exitDocuments', currentPage, filters],
-    queryFn: () => exitDocumentService.getAll(currentPage, itemsPerPage, filters),
+  const { control } = useForm();
+  const { user } = useAuth();
+  const [filteredData, setFilteredData] = useState([]);
+  const filters = useWatch({
+    control,
+    name: ['number', 'date'],
   });
 
-  const totalItems: any = data?.data?.total || 0;
-  const totalPages: number = Math.ceil(totalItems / itemsPerPage);
+  const [number, date] = filters;
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['exitDocuments'],
+    queryFn: () => exitDocumentService.getByExecutor(user?.userId),
+  });
+
+  useEffect(() => {
+    if (data?.data) {
+      let result = data?.data;
+
+      if (number) {
+        result = result.filter((doc) =>
+          doc.number.toLowerCase().includes(number.toLowerCase()),
+        );
+      }
+
+      if (date) {
+        result = result.filter((doc) => isSameDay(parseISO(doc.date), date));
+      }
+
+      setFilteredData(result);
+    }
+  }, [number, data]);
 
   const columns = [
     { label: 'ID', key: 'id' },
@@ -58,30 +55,21 @@ export default function ExitDocuments() {
     { label: 'Primit de', key: 'received' },
   ];
 
-  const onDownload = async (id: any) => {
+  const onDownload = async (id) => {
     try {
-      const document = await exitDocumentService.getById(id);
+      const document = await entryDocumentService.getById(id);
       const fileName = document.data?.file_path;
-      await exitDocumentService.downloadFile(fileName);
+      await entryDocumentService.downloadFile(fileName);
     } catch (error) {
       toast.error('Eroare la descărcarea fișierului');
     }
   };
 
-  const onDelete = async (id: any) => {
-    try {
-      await exitDocumentService.delete(id);
-      window.location.reload();
-    } catch (error) {
-      toast.error('Eroare la ștergerea fișierului fișierului');
-    }
-  };
-
-  const tableData = data?.data.data.map((doc: any) => ({
+  const tableData = filteredData.map((doc) => ({
     id: doc.id,
     number: doc.number,
     date: doc.date,
-    executor: doc.executors.map((e: any) => (
+    executor: doc.executors.map((e) => (
       <div key={e.id} className="mb-1">
         {e.name} {e.surname}
       </div>
@@ -89,12 +77,14 @@ export default function ExitDocuments() {
     received: doc.received.name,
   }));
 
+  if (isLoading) return <Loader />;
+
   return (
     <section>
       <header className="page-header">
-        <h1 className="page-title">Documente de ieșire</h1>
+        <h1 className="page-title">Documente de intrare</h1>
       </header>
-      <form className="search-document-form">
+      <form className="flex mb-4 gap-x-4">
         <div className="mb-4 lg:mb-0">
           <InputField
             name="number"
@@ -102,56 +92,24 @@ export default function ExitDocuments() {
             control={control}
             id="entry-document-search"
             type="search"
-            className="w-full lg:w-[250px]"
+            className="w-full"
             size="medium"
             placeholder={'Introdu numărul documentului'}
           />
         </div>
         <div className="search-document-selector">
-          <Button
-            size="small"
-            variant="primary"
-            value={
-              <>
-                adaugă <MdNoteAdd size={15} />
-              </>
-            }
-            onClick={() => router.push('exit-documents/create')}
-          />
-          <SelectInputField
-            options={selectOptions}
-            className="w-full"
-            control={control}
-            name="status"
-            id="entry-document-status-select"
-            placeholder={'Caută după statut'}
-          />
           <DatePickerField
             className="w-full"
             control={control}
             name="date"
+            label="Caută după dată"
             id="entry-document-date-select"
             placeholder={'Caută după dată'}
           />
         </div>
       </form>
       <article>
-        <Table
-          columns={columns}
-          data={tableData}
-          onModify={(id) => router.push(`exit-documents/update/${id}`)}
-          onDownload={(id) => onDownload(id)}
-          onDelete={(id) => onDelete(id)}
-        />
-        <div className="pt-5 pb-5">
-          {Array.isArray(tableData) && tableData.length > 0 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={(page) => setCurrentPage(page)}
-            />
-          )}
-        </div>
+        <Table columns={columns} data={tableData} onDownload={onDownload} />
       </article>
     </section>
   );

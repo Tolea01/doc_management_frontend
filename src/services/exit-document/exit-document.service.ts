@@ -91,6 +91,14 @@ class ExitDocumentService {
 
     return response;
   }
+
+  async getByExecutor(id: any): Promise<AxiosResponse<any, any>> {
+    const response: AxiosResponse<any, any> = await axiosWithAuth.get<any>(
+      `${this.BASE_URL}/executor/${id}`,
+    );
+
+    return response;
+  }
 }
 
 export const exitDocumentService: ExitDocumentService = new ExitDocumentService();
