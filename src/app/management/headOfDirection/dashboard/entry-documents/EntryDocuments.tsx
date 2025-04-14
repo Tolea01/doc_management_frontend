@@ -7,45 +7,58 @@ import SelectInputField from '@components/fields/SelectInputField';
 import Table from '@components/tables/Table';
 import { entryDocumentService } from '@services/entry-document/entry-document.service';
 import { useQuery } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
+import { isSameDay, parseISO } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useAuth } from '../../../../../hooks/useAuth';
 import getDocumentBadgeVariant from '../../../../../utils/getDocumentBadgeVariant';
 import getDocumentStatusOptions from '../../../../../utils/getDocumentStatus';
-import { useState, useEffect } from 'react';
 
 export default function EntryDocuments() {
-  const { control, watch } = useForm();
+  const { control } = useForm();
   const selectOptions = getDocumentStatusOptions();
   const { user } = useAuth();
   const [filteredData, setFilteredData] = useState([]);
+  const filters = useWatch({
+    control,
+    name: ['number', 'status', 'date', 'execution_time'],
+  });
+
+  const [number, status, date, execution_time] = filters;
 
   const { data, isLoading } = useQuery({
     queryKey: ['entryDocuments'],
     queryFn: () => entryDocumentService.getByCoordinator(user?.userId),
   });
 
-  const filters = watch();
-  console.log(filters)
-
   useEffect(() => {
     if (data?.data) {
       let result = data.data;
-      if (filters.number) {
-        result = result.filter((doc) => doc.number.includes(filters.number));
+
+      if (number) {
+        result = result.filter((doc) =>
+          doc.number.toLowerCase().includes(number.toLowerCase()),
+        );
       }
-      if (filters.status) {
-        result = result.filter((doc) => doc.status === filters.status);
+
+      if (status?.value) {
+        result = result.filter((doc) => doc.status === status.label);
       }
-      if (filters.date) {
-        result = result.filter((doc) => doc.date === filters.date);
+
+      if (date) {
+        result = result.filter((doc) => isSameDay(parseISO(doc.date), date));
       }
-      if (filters.execution_time) {
-        result = result.filter((doc) => doc.execution_time === filters.execution_time);
+
+      if (execution_time) {
+        result = result.filter((doc) =>
+          isSameDay(parseISO(doc.execution_time), execution_time),
+        );
       }
+
       setFilteredData(result);
     }
-  }, [filters, data]);
+  }, [number, status, date, execution_time, data]);
 
   const columns = [
     { label: 'ID', key: 'id' },
