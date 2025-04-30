@@ -1,5 +1,5 @@
 .auth-wrapper {
-  @apply flex md:mt-24 justify-center;
+  @apply flex md:mt-10 justify-center;
 }
 
 .auth-form {
@@ -11,7 +11,7 @@
 }
 
 .auth-subtitle {
-  @apply w-full text-center text-2xl font-semibold mb-2;
+  @apply w-full text-center text-xl font-semibold mb-4;
 }
 
 .auth-input {

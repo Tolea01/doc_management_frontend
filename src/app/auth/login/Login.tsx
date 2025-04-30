@@ -60,7 +60,7 @@ export default function Login() {
         onKeyDown={handleKeyPress}
       >
         <h2 className="auth-title">
-          AGENȚIA TERITORIALĂ DE ASISTENȚĂ SOCIALĂ NORD-NORD-VEST
+          MANAGEMENTUL DOCUMENTELOR ONLINE
         </h2>
         <h3 className="auth-subtitle">Loghează-te</h3>
         <InputField<IAuthLoginForm>
