@@ -10,6 +10,7 @@ export default class DASHBOARD_PAGES {
   USERS: string;
   PERSONS: string;
   SETTINGS: string;
+  MESSAGES: string;
 
   constructor(userRole?: UserRole) {
     this.userRole = userRole;
@@ -20,5 +21,6 @@ export default class DASHBOARD_PAGES {
     this.USERS = `${this.root}/${this.userRole}/dashboard/users`;
     this.PERSONS = `${this.root}/${this.userRole}/dashboard/persons`;
     this.SETTINGS = `${this.root}/${this.userRole}/dashboard/settings`;
+    this.MESSAGES = `${this.root}/${this.userRole}/dashboard/messages`;
   }
 }

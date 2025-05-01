@@ -4,6 +4,7 @@ import { FaHome, FaRegUser } from 'react-icons/fa';
 import { FaPerson } from 'react-icons/fa6';
 import { IoDocumentSharp, IoDocumentTextSharp } from 'react-icons/io5';
 import { MdDocumentScanner, MdOutlineSettings } from 'react-icons/md';
+import { PiChatCircleDotsBold } from 'react-icons/pi';
 import { MenuItem } from '../../../types/menu.types';
 
 export const menuItems: Record<UserRole, MenuItem[]> = {
@@ -17,6 +18,11 @@ export const menuItems: Record<UserRole, MenuItem[]> = {
       path: new DASHBOARD_PAGES(UserRole.ADMIN).USERS,
       label: 'Gestionare utilizatori',
       icon: <FaRegUser size={25} />,
+    },
+    {
+      path: new DASHBOARD_PAGES(UserRole.ADMIN).MESSAGES,
+      label: 'Mesaje',
+      icon: <PiChatCircleDotsBold size={26} />,
     },
     {
       path: new DASHBOARD_PAGES(UserRole.ADMIN).SETTINGS,
@@ -52,6 +58,11 @@ export const menuItems: Record<UserRole, MenuItem[]> = {
       icon: <FaPerson size={25} />,
     },
     {
+      path: new DASHBOARD_PAGES(UserRole.DIRECTOR).MESSAGES,
+      label: 'Mesaje',
+      icon: <PiChatCircleDotsBold size={26} />,
+    },
+    {
       path: new DASHBOARD_PAGES(UserRole.DIRECTOR).SETTINGS,
       label: 'Setări profil',
       icon: <MdOutlineSettings size={25} />,
@@ -85,6 +96,11 @@ export const menuItems: Record<UserRole, MenuItem[]> = {
       icon: <FaPerson size={25} />,
     },
     {
+      path: new DASHBOARD_PAGES(UserRole.SECRETARY).MESSAGES,
+      label: 'Mesaje',
+      icon: <PiChatCircleDotsBold size={26} />,
+    },
+    {
       path: new DASHBOARD_PAGES(UserRole.SECRETARY).SETTINGS,
       label: 'Setări profil',
       icon: <MdOutlineSettings size={25} />,
@@ -111,6 +127,11 @@ export const menuItems: Record<UserRole, MenuItem[]> = {
       path: new DASHBOARD_PAGES(UserRole.HEAD_OF_DIRECTION).INTERNAL_DOCUMENTS,
       label: 'Documente interne',
       icon: <MdDocumentScanner size={25} />,
+    },
+    {
+      path: new DASHBOARD_PAGES(UserRole.HEAD_OF_DIRECTION).MESSAGES,
+      label: 'Mesaje',
+      icon: <PiChatCircleDotsBold size={26} />,
     },
     {
       path: new DASHBOARD_PAGES(UserRole.HEAD_OF_DIRECTION).SETTINGS,
