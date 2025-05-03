@@ -1,3 +1,5 @@
+import Chat from '../../../../../components/chat/Chat'
+
 export default function page() {
-  return <p>admin home page</p>;
+  return <Chat/>;
 }
